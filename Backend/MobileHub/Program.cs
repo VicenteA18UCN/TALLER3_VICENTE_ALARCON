@@ -1,3 +1,4 @@
+using backend.Src.Extensions;
 using MobileHub.Src.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,5 +24,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+AppSeedService.SeedDatabase(app);
 
 app.Run();
