@@ -23,6 +23,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+#region CORS_CONFIGURATION
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+});
+#endregion
+
 app.MapControllers();
 
 AppSeedService.SeedDatabase(app);

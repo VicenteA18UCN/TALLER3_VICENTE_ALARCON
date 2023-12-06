@@ -11,8 +11,8 @@ using MobileHub.Src.Data;
 namespace MobileHub.Src.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231204175521_UserMigration")]
-    partial class UserMigration
+    [Migration("20231206155124_UserMigrations")]
+    partial class UserMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,10 @@ namespace MobileHub.Src.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Fullname")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

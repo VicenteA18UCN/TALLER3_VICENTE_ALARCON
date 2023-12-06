@@ -34,6 +34,10 @@ namespace MobileHub.Src.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Rut")
                         .IsRequired()
                         .HasColumnType("TEXT");

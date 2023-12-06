@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MobileHub.Src.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UserMigration : Migration
+    public partial class UserMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,6 +20,7 @@ namespace MobileHub.Src.Data.Migrations
                     Fullname = table.Column<string>(type: "TEXT", nullable: false),
                     Rut = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
                     Birthday = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
