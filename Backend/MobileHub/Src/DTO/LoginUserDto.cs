@@ -8,11 +8,11 @@ namespace MobileHub.Src.DTO
 {
     public class LoginUserDto
     {
-        [Required(ErrorMessage = "El email es requerido")]
-        [EmailAddress(ErrorMessage = "El email no es válido")]
+        [Required(ErrorMessage = "The email is required")]
+        [EmailAddress(ErrorMessage = "The email is not valid")]
         public string Email { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "La contraseña es requerida")]
+        [Required(ErrorMessage = "The password is required")]
         public string Password { get; set; } = string.Empty;
     }
 }

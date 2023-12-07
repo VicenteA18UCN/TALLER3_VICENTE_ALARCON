@@ -55,5 +55,42 @@ namespace MobileHub.Src.Controllers
             return Ok(new { Token = token });
         }
 
+        [HttpPost("register")]
+        public async Task<ActionResult<string>> Register(CreateUserDto createUserDto)
+        {
+            if (string.IsNullOrEmpty(createUserDto.Email) || string.IsNullOrEmpty(createUserDto.Rut) || string.IsNullOrEmpty(createUserDto.Fullname))
+            {
+                return BadRequest("Empty fields");
+            }
+
+            createUserDto.Rut = createUserDto.Rut.ToUpper();
+
+            if (!_authService.CheckRut(createUserDto.Rut))
+            {
+                return BadRequest("Invalid rut");
+            }
+
+            if (!_authService.CheckEmail(createUserDto.Email))
+            {
+                return BadRequest("Invalid email");
+            }
+
+            if (!_authService.CheckBirthday(createUserDto.Birthday))
+            {
+                return BadRequest("Invalid birthday");
+            }
+
+            var user = await _authService.GetUser(createUserDto.Email);
+            if (user != null) return BadRequest("User already exists");
+
+            var createdUser = await _authService.Register(createUserDto);
+            if (createdUser == null) return BadRequest("Error creating user");
+
+            var token = _authService.GenerateToken(createdUser.Email, createdUser.Id);
+            if (string.IsNullOrEmpty(token)) return BadRequest("Token error");
+
+            return Ok(new { Token = token });
+        }
+
     }
 }

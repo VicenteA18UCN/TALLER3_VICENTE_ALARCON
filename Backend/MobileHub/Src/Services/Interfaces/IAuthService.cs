@@ -39,5 +39,10 @@ namespace MobileHub.Src.Services.Interfaces
         /// </param>
         public Task<User?> GetUser(string email);
 
+        public Task<User?> Register(CreateUserDto createUserDto);
+
+        public bool CheckRut(string rut);
+        public bool CheckBirthday(DateTime birthdate);
+        public bool CheckEmail(string email);
     }
 }

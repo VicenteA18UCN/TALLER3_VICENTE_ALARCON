@@ -8,16 +8,16 @@ namespace MobileHub.Src.DTO
 {
     public class CreateUserDto
     {
-        [Required(ErrorMessage = "El nombre es requerido")]
-        [StringLength(150, ErrorMessage = "El nombre no puede tener más de 150 caracteres")]
-        [MinLength(10, ErrorMessage = "El nombre no puede tener menos de 10 caracteres")]
+        [Required(ErrorMessage = "The password is required")]
+        [MaxLength(150, ErrorMessage = "The password must be less than 150 characters")]
+        [MinLength(10, ErrorMessage = "The password must be at least 10 characters")]
         public string Fullname { get; set; } = string.Empty;
-        [Required(ErrorMessage = "El rut es requerido")]
+        [Required(ErrorMessage = "The rut is required")]
         public string Rut { get; set; } = string.Empty;
-        [Required(ErrorMessage = "El email es requerido")]
-        [EmailAddress(ErrorMessage = "El email no es válido")]
+        [Required(ErrorMessage = "The email is required")]
+        [EmailAddress(ErrorMessage = "The email is not valid")]
         public string Email { get; set; } = string.Empty;
-        [Required(ErrorMessage = "El cumpleaños es requerido")]
+        [Required(ErrorMessage = "The birthday is required")]
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; } = DateTime.Now;
 

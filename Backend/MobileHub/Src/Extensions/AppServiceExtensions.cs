@@ -7,6 +7,7 @@ using MobileHub.Src.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using DotNetEnv;
 
 
 namespace MobileHub.Src.Extensions
@@ -88,7 +89,8 @@ namespace MobileHub.Src.Extensions
         /// </param>
         private static IServiceCollection AddAuthentication(IServiceCollection services, IConfiguration config)
         {
-            var jwtSecret = config["JwtSettings:Secret"] ?? throw new Exception("JwtSettings:Secret is null");
+            Env.Load();
+            var jwtSecret = Env.GetString("SECRET_KEY") ?? throw new Exception("SECRET_KEY is null");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
