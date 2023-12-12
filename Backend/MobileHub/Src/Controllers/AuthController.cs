@@ -49,7 +49,7 @@ namespace MobileHub.Src.Controllers
             var user = await _authService.GetUser(loginUserDto.Email);
             if (user == null) return BadRequest("Invalid Credentials");
 
-            var token = _authService.GenerateToken(user.Email, user.Id);
+            var token = _authService.GenerateToken(user.Email);
             if (string.IsNullOrEmpty(token)) return BadRequest("Token error");
 
             return Ok(new { Token = token });
@@ -86,7 +86,7 @@ namespace MobileHub.Src.Controllers
             var createdUser = await _authService.Register(createUserDto);
             if (createdUser == null) return BadRequest("Error creating user");
 
-            var token = _authService.GenerateToken(createdUser.Email, createdUser.Id);
+            var token = _authService.GenerateToken(createdUser.Email);
             if (string.IsNullOrEmpty(token)) return BadRequest("Token error");
 
             return Ok(new { Token = token });

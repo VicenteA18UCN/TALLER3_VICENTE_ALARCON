@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MobileHub.Src.DTO;
 using MobileHub.Src.Util;
-using MobileHub.Src.Models;
+using MobileHub.Src.DTO.Users;
 using DotNetEnv;
 using System.Text.RegularExpressions;
 namespace MobileHub.Src.Services
@@ -15,15 +15,17 @@ namespace MobileHub.Src.Services
     {
         private readonly string _jwtSecret;
         private readonly IUsersRepository _usersRepository;
-        public AuthService(IConfiguration config, IUsersRepository usersRepository)
+        private readonly IMappingService _mappingService;
+        public AuthService(IConfiguration config, IUsersRepository usersRepository, IMappingService mappingService)
         {
             Env.Load();
             var token = Env.GetString("SECRET_KEY") ?? throw new ArgumentNullException("SECRET_KEY is null");
             _jwtSecret = token;
             _usersRepository = usersRepository ?? throw new ArgumentNullException(nameof(usersRepository));
+            _mappingService = mappingService ?? throw new ArgumentNullException(nameof(mappingService));
         }
 
-        public string? GenerateToken(string email, int id)
+        public string? GenerateToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSecret);
@@ -31,8 +33,7 @@ namespace MobileHub.Src.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.NameIdentifier, id.ToString()),
-                    new Claim(ClaimTypes.Name, email),
+                    new Claim(ClaimTypes.NameIdentifier, email),
 
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -57,31 +58,23 @@ namespace MobileHub.Src.Services
             return BCryptHelper.CheckPassword(loginUserDto.Password, user.Password);
         }
 
-        public async Task<User?> GetUser(string email)
+        public async Task<GetUserDto?> GetUser(string email)
         {
             var user = await _usersRepository.GetByEmail(email);
-            if (user == null) return null;
-            return user;
+            if (user == null) throw new Exception("User not found");
+            var mappedDto = _mappingService.MapUserToGetUserDto(user);
+            return mappedDto;
         }
 
-        public async Task<User?> Register(CreateUserDto createUserDto)
+        public async Task<CreateUserDto?> Register(CreateUserDto createUserDto)
         {
-
-
             var rut = createUserDto.Rut.Replace(".", "").Replace("-", "");
             var password = rut.Substring(0, rut.Length - 1);
-
-            var newUser = new User
-            {
-                Email = createUserDto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(password),
-                Fullname = createUserDto.Fullname,
-                Rut = createUserDto.Rut,
-                Birthday = createUserDto.Birthday
-            };
-
-            var result = await _usersRepository.Add(newUser);
-            return result;
+            createUserDto.Password = password;
+            var user = _mappingService.CreateClientDtoToUser(createUserDto);
+            var createdUser = await _usersRepository.Add(user);
+            var mappedDto = _mappingService.MapUserToCreateUserDto(createdUser);
+            return mappedDto;
         }
 
         public bool CheckRut(string rut)

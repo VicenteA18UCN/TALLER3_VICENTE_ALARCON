@@ -31,6 +31,7 @@ namespace MobileHub.Src.Extensions
             AddRepositories(services);
             AddServices(services);
             AddAuthentication(services, config);
+            AddAutoMapper(services);
         }
 
         /// <summary>
@@ -76,6 +77,8 @@ namespace MobileHub.Src.Extensions
         private static void AddServices(IServiceCollection services)
         {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IMappingService, MappingService>();
         }
 
         /// <summary>   
@@ -104,6 +107,12 @@ namespace MobileHub.Src.Extensions
             });
             return services;
         }
+
+        private static void AddAutoMapper(IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Program).Assembly);
+        }
+
 
     }
 }

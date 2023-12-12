@@ -1,6 +1,7 @@
 using MobileHub.Src.DTO;
 using MobileHub.Src.Models;
 using Microsoft.AspNetCore.Authorization;
+using MobileHub.Src.DTO.Users;
 
 namespace MobileHub.Src.Services.Interfaces
 {
@@ -8,18 +9,15 @@ namespace MobileHub.Src.Services.Interfaces
     public interface IAuthService
     {
         /// <summary>
-        ///  Método para generar un token. Genera un token con el rut y el id del administrador.
+        ///  Método para generar un token. Genera un token con el email.
         /// </summary>
-        /// <param name="username">
-        /// - rut: Rut del administrador.
-        /// </param>
-        /// <param name="id">
-        /// - id: Id del administrador.
+        /// <param name="email">
+        /// - Email: email del usuario.
         /// </param>
         /// <returns>
         /// Retorna el token generado.
         /// </returns>
-        public string? GenerateToken(string email, int id);
+        public string? GenerateToken(string email);
         /// <summary>
         /// Método para verificar las credenciales de un administrador.
         /// </summary>
@@ -37,9 +35,9 @@ namespace MobileHub.Src.Services.Interfaces
         /// <param name="email">
         /// - email: Email del usuario a obtener.
         /// </param>
-        public Task<User?> GetUser(string email);
+        public Task<GetUserDto?> GetUser(string email);
 
-        public Task<User?> Register(CreateUserDto createUserDto);
+        public Task<CreateUserDto?> Register(CreateUserDto createUserDto);
 
         public bool CheckRut(string rut);
         public bool CheckBirthday(DateTime birthdate);

@@ -20,6 +20,8 @@ namespace MobileHub.Src.DTO
         [Required(ErrorMessage = "The birthday is required")]
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; } = DateTime.Now;
+        
+        public string Password { get; set; } = string.Empty;
 
     }
 }
