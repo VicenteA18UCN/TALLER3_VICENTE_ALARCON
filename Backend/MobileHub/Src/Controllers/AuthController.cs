@@ -68,8 +68,6 @@ namespace MobileHub.Src.Controllers
             var userRut = await _authService.GetUserByRut(createUserDto.Rut);
             if (userRut != null) return BadRequest("User already exists");
 
-            if (createUserDto.Birthday > DateTime.Now) return BadRequest("Invalid birthday");
-
             var userEmail = await _authService.GetUserByEmail(createUserDto.Email);
             if (userEmail != null) return BadRequest("User already exists");
 

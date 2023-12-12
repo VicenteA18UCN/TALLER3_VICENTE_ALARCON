@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MobileHub.Src.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UserMigrations : Migration
+    public partial class UserMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +20,7 @@ namespace MobileHub.Src.Data.Migrations
                     Rut = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
-                    Birthday = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Birthday = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

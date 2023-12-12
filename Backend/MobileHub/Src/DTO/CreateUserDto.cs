@@ -16,8 +16,8 @@ namespace MobileHub.Src.DTO
         [UCNEmailAddress(ErrorMessage = "The email is not valid")]
         public string Email { get; set; } = string.Empty;
         [Required(ErrorMessage = "The birthday is required")]
-        [DataType(DataType.Date)]
-        public DateTime Birthday { get; set; } = DateTime.Now;
+        [BirthdateRange(ErrorMessage = "The birthday is not valid")]
+        public int Birthday { get; set; }
 
         public string Password { get; set; } = string.Empty;
 

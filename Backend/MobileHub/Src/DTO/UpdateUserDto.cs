@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
 using MobileHub.Src.DataAnnotations;
 
 namespace MobileHub.Src.DTO
@@ -13,8 +11,9 @@ namespace MobileHub.Src.DTO
         public string Fullname { get; set; } = string.Empty;
         [UCNEmailAddress(ErrorMessage = "The email is not valid")]
         public string Email { get; set; } = string.Empty;
-        [DataType(DataType.Date)]
-        [Required(ErrorMessage = "The birthday is required")]
-        public DateTime Birthday { get; set; } = DateTime.Now;
+
+        [Required(ErrorMessage = "The age birthday is required")]
+        [BirthdateRange(ErrorMessage = "The age birthday is not valid")]
+        public int Birthday { get; set; }
     }
 }

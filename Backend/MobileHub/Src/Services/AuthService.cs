@@ -9,6 +9,7 @@ using MobileHub.Src.Util;
 using MobileHub.Src.DTO.Users;
 using DotNetEnv;
 using System.Text.RegularExpressions;
+using BCrypt.Net;
 namespace MobileHub.Src.Services
 {
     public class AuthService : IAuthService
@@ -62,7 +63,8 @@ namespace MobileHub.Src.Services
         {
             var rut = createUserDto.Rut.Replace(".", "").Replace("-", "");
             var password = rut.Substring(0, rut.Length - 1);
-            createUserDto.Password = password;
+            createUserDto.Password = BCrypt.Net.BCrypt.HashPassword(password);
+
             var user = _mappingService.CreateClientDtoToUser(createUserDto);
             var createdUser = await _usersRepository.Add(user);
             var mappedDto = _mappingService.MapUserToCreateUserDto(createdUser);
@@ -72,7 +74,7 @@ namespace MobileHub.Src.Services
         public async Task<GetUserDto?> GetUserByRut(string rut)
         {
             var user = await _usersRepository.GetByRut(rut);
-            if (user == null) throw new Exception("User not found");
+            if (user == null) return null;
             var mappedDto = _mappingService.MapUserToGetUserDto(user);
             return mappedDto;
         }
@@ -80,7 +82,7 @@ namespace MobileHub.Src.Services
         public async Task<GetUserDto?> GetUserByEmail(string email)
         {
             var user = await _usersRepository.GetByEmail(email);
-            if (user == null) throw new Exception("User not found");
+            if (user == null) return null;
             var mappedDto = _mappingService.MapUserToGetUserDto(user);
             return mappedDto;
         }

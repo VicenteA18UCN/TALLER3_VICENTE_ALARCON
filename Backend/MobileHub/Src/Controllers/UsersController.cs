@@ -31,7 +31,7 @@ namespace MobileHub.Src.Controllers
         /// <response code="200">Retorna un usuario en caso de que exista, con sus datos.</response>
         /// <response code="400">En caso de que el usuario no exista, retorna un BadRequest, con el mensaje "User not found".</response>
         /// <response code="500">En caso de que ocurra un error, retorna un InternalServerError, con el mensaje "Internal Server Error".</response>
-        [HttpGet("{email}")]
+        [HttpGet("{rut}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -12,6 +12,6 @@ namespace MobileHub.Src.DTO.Users
         public string Rut { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public DateTime Birthday { get; set; } = DateTime.Now;
+        public int Birthday { get; set; }
     }
 }
