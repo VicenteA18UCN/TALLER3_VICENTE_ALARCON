@@ -33,9 +33,17 @@ namespace MobileHub.Src.Services
         /// <param name="email">
         /// - email: Email del usuario a obtener.
         /// </param>
-        public async Task<GetUserDto> GetUser(string rut)
+        public async Task<GetUserDto> GetUserByRut(string rut)
         {
             var user = await _usersRepository.GetByRut(rut);
+            if (user == null) throw new Exception("User not found");
+            var mappedDto = _mappingService.MapUserToGetUserDto(user);
+            return mappedDto;
+        }
+
+        public async Task<GetUserDto> GetUserByEmail(string email)
+        {
+            var user = await _usersRepository.GetByEmail(email);
             if (user == null) throw new Exception("User not found");
             var mappedDto = _mappingService.MapUserToGetUserDto(user);
             return mappedDto;

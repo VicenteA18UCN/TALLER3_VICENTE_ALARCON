@@ -58,14 +58,6 @@ namespace MobileHub.Src.Services
             return BCryptHelper.CheckPassword(loginUserDto.Password, user.Password);
         }
 
-        public async Task<GetUserDto?> GetUser(string email)
-        {
-            var user = await _usersRepository.GetByEmail(email);
-            if (user == null) throw new Exception("User not found");
-            var mappedDto = _mappingService.MapUserToGetUserDto(user);
-            return mappedDto;
-        }
-
         public async Task<CreateUserDto?> Register(CreateUserDto createUserDto)
         {
             var rut = createUserDto.Rut.Replace(".", "").Replace("-", "");
@@ -77,22 +69,20 @@ namespace MobileHub.Src.Services
             return mappedDto;
         }
 
-        public bool CheckRut(string rut)
+        public async Task<GetUserDto?> GetUserByRut(string rut)
         {
-            if (string.IsNullOrEmpty(rut)) return false;
-            return RutValidator.IsValid(rut);
+            var user = await _usersRepository.GetByRut(rut);
+            if (user == null) throw new Exception("User not found");
+            var mappedDto = _mappingService.MapUserToGetUserDto(user);
+            return mappedDto;
         }
 
-        public bool CheckBirthday(DateTime birthday)
+        public async Task<GetUserDto?> GetUserByEmail(string email)
         {
-            if (birthday > DateTime.Now) return false;
-            return true;
-        }
-
-        public bool CheckEmail(string email)
-        {
-            var emailRegex = new Regex(@"^[a-zA-Z0-9._%+-]+@(?:ucn\.cl|alumnos\.ucn\.cl|disc\.ucn\.cl|ce\.ucn\.cl)$");
-            return emailRegex.IsMatch(email);
+            var user = await _usersRepository.GetByEmail(email);
+            if (user == null) throw new Exception("User not found");
+            var mappedDto = _mappingService.MapUserToGetUserDto(user);
+            return mappedDto;
         }
     }
 }

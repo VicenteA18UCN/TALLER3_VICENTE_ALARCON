@@ -46,7 +46,7 @@ namespace MobileHub.Src.Controllers
             var checkCredentials = await _authService.CheckCredentials(loginUserDto);
             if (!checkCredentials) return BadRequest("Invalid Credentials");
 
-            var user = await _authService.GetUser(loginUserDto.Email);
+            var user = await _authService.GetUserByEmail(loginUserDto.Email);
             if (user == null) return BadRequest("Invalid Credentials");
 
             var token = _authService.GenerateToken(user.Email);
@@ -65,23 +65,13 @@ namespace MobileHub.Src.Controllers
 
             createUserDto.Rut = createUserDto.Rut.ToUpper();
 
-            if (!_authService.CheckRut(createUserDto.Rut))
-            {
-                return BadRequest("Invalid rut");
-            }
+            var userRut = await _authService.GetUserByRut(createUserDto.Rut);
+            if (userRut != null) return BadRequest("User already exists");
 
-            if (!_authService.CheckEmail(createUserDto.Email))
-            {
-                return BadRequest("Invalid email");
-            }
+            if (createUserDto.Birthday > DateTime.Now) return BadRequest("Invalid birthday");
 
-            if (!_authService.CheckBirthday(createUserDto.Birthday))
-            {
-                return BadRequest("Invalid birthday");
-            }
-
-            var user = await _authService.GetUser(createUserDto.Email);
-            if (user != null) return BadRequest("User already exists");
+            var userEmail = await _authService.GetUserByEmail(createUserDto.Email);
+            if (userEmail != null) return BadRequest("User already exists");
 
             var createdUser = await _authService.Register(createUserDto);
             if (createdUser == null) return BadRequest("Error creating user");

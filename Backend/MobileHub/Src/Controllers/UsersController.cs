@@ -39,7 +39,7 @@ namespace MobileHub.Src.Controllers
         {
             try
             {
-                var user = await _usersService.GetUser(rut);
+                var user = await _usersService.GetUserByRut(rut);
                 return Ok(user);
             }
             catch (Exception e)
@@ -73,7 +73,11 @@ namespace MobileHub.Src.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _usersService.GetUser(rut);
+            var user = await _usersService.GetUserByRut(rut);
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
 
             var existsEmail = await _usersService.CheckEmail(updateUserDto.Email);
             if (existsEmail && user.Email != updateUserDto.Email)

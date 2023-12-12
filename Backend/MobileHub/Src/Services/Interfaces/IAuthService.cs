@@ -29,18 +29,12 @@ namespace MobileHub.Src.Services.Interfaces
         /// </returns>
         public Task<bool> CheckCredentials(LoginUserDto loginUserDto);
 
-        /// <summary>
-        /// Método para obtener un usuario por su email.
-        /// </summary>
-        /// <param name="email">
-        /// - email: Email del usuario a obtener.
-        /// </param>
-        public Task<GetUserDto?> GetUser(string email);
+        public Task<GetUserDto?> GetUserByEmail(string email);
+
+        public Task<GetUserDto?> GetUserByRut(string rut);
 
         public Task<CreateUserDto?> Register(CreateUserDto createUserDto);
 
-        public bool CheckRut(string rut);
-        public bool CheckBirthday(DateTime birthdate);
-        public bool CheckEmail(string email);
+
     }
 }

@@ -1,12 +1,9 @@
 using System.Text.RegularExpressions;
+using MobileHub.Src.Common;
 
 namespace MobileHub.Src.Util
 {
-    public static partial class RegularExpressions
-    {
-        [GeneratedRegex("^([0-9]+-[0-9K])$", RegexOptions.Compiled)]
-        public static partial Regex RutRegex();
-    }
+
 
     public class RutValidator
     {
