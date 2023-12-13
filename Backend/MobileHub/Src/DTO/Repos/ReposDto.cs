@@ -14,5 +14,6 @@ namespace MobileHub.Src.DTO.Repos
         public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.Now;
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
         public string HtmlUrl { get; set; } = null!;
+        public int CommitCount { get; set; } = 0;
     }
 }

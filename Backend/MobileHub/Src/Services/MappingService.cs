@@ -1,5 +1,6 @@
 using AutoMapper;
 using MobileHub.Src.DTO;
+using MobileHub.Src.DTO.Commits;
 using MobileHub.Src.DTO.Repos;
 using MobileHub.Src.DTO.Users;
 using MobileHub.Src.Models;
@@ -47,6 +48,12 @@ namespace MobileHub.Src.Services
         {
             return _mapper.Map<ReposDto>(repository);
         }
+
+        public CommitDto MapCommitToCommitDto(Octokit.GitHubCommit commit)
+        {
+            return _mapper.Map<CommitDto>(commit);
+        }
+        
 
     }
 }

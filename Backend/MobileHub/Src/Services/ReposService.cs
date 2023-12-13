@@ -3,6 +3,7 @@ using MobileHub.Src.Services.Interfaces;
 using DotNetEnv;
 using Octokit;
 using MobileHub.Src.DTO.Repos;
+using MobileHub.Src.DTO.Commits;
 
 
 namespace MobileHub.Src.Services
@@ -39,15 +40,25 @@ namespace MobileHub.Src.Services
             foreach (var repo in repos)
             {
                 var repoDto = _mappingService.MapRepositoryToReposDto(repo);
+                var commitsCount = await _reposRepository.GetCommitsCountByRepositories(_client, repo.Name);
+                repoDto.CommitCount = commitsCount;
                 reposDto.Add(repoDto);
             }
             return reposDto;
         }
 
-        public async Task<IReadOnlyList<GitHubCommit>?> GetCommitsByRepositories(string repoName)
+        public async Task<IReadOnlyList<CommitDto>?> GetCommitsByRepositories(string repoName)
         {
             var commits = await _reposRepository.GetCommitsByRepositories(_client, repoName);
-            return commits;
+            if (commits == null) return null;
+            commits = commits.OrderByDescending(x => x.Commit.Committer.Date).ToList();
+            var commitsDto = new List<CommitDto>();
+            foreach (var commit in commits)
+            {
+                var commitDto = _mappingService.MapCommitToCommitDto(commit);
+                commitsDto.Add(commitDto);
+            }
+            return commitsDto;
         }
 
     }

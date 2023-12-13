@@ -24,6 +24,12 @@ namespace MobileHub.Src.Repositories
             return commits;
         }
 
+        public async Task<int> GetCommitsCountByRepositories(GitHubClient client, string repoName)
+        {
+            var commits = (await client.Repository.Commit.GetAll("Dizkm8", repoName)).ToList();
+            return commits.Count;
+        }
+
 
     }
 }
