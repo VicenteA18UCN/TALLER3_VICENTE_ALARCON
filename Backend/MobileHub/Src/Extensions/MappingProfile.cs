@@ -1,7 +1,9 @@
 using AutoMapper;
 using MobileHub.Src.DTO.Users;
+using MobileHub.Src.DTO.Repos;
 using MobileHub.Src.DTO;
 using MobileHub.Src.Models;
+
 
 namespace MobileHub.Src.Extensions
 {
@@ -15,6 +17,7 @@ namespace MobileHub.Src.Extensions
             CreateMap<User, GetUserDto>();
             CreateMap<User, UpdateUserDto>();
             CreateMap<UpdateUserDto, User>();
+            CreateMap<Octokit.Repository, ReposDto>();
         }
     }
 }

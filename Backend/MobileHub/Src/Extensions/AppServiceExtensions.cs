@@ -66,6 +66,7 @@ namespace MobileHub.Src.Extensions
         private static void AddRepositories(IServiceCollection services)
         {
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IReposRepository, ReposRepository>();
         }
 
         /// <summary>
@@ -79,6 +80,7 @@ namespace MobileHub.Src.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IMappingService, MappingService>();
+            services.AddScoped<IReposService, ReposService>();
         }
 
         /// <summary>   

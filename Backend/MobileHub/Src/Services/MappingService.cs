@@ -1,8 +1,10 @@
 using AutoMapper;
 using MobileHub.Src.DTO;
+using MobileHub.Src.DTO.Repos;
 using MobileHub.Src.DTO.Users;
 using MobileHub.Src.Models;
 using MobileHub.Src.Services.Interfaces;
+
 
 
 namespace MobileHub.Src.Services
@@ -39,6 +41,11 @@ namespace MobileHub.Src.Services
         public UpdateUserDto CreateUpdateUserDto(User user)
         {
             return _mapper.Map<UpdateUserDto>(user);
+        }
+
+        public ReposDto MapRepositoryToReposDto(Octokit.Repository repository)
+        {
+            return _mapper.Map<ReposDto>(repository);
         }
 
     }

@@ -6,10 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MobileHub.Src.DTO;
 using MobileHub.Src.Util;
-using MobileHub.Src.DTO.Users;
 using DotNetEnv;
-using System.Text.RegularExpressions;
-using BCrypt.Net;
 namespace MobileHub.Src.Services
 {
     public class AuthService : IAuthService
