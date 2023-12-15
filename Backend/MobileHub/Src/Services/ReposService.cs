@@ -37,13 +37,25 @@ namespace MobileHub.Src.Services
             if (repos == null) return null;
             repos = repos.OrderByDescending(x => x.UpdatedAt).ToList();
             var reposDto = new List<ReposDto>();
-            foreach (var repo in repos)
+
+            var getCommitsTasks = repos.Select(repo =>
             {
-                var repoDto = _mappingService.MapRepositoryToReposDto(repo);
-                var commitsCount = await _reposRepository.GetCommitsCountByRepositories(_client, repo.Name);
-                repoDto.CommitCount = commitsCount;
+                if (repo.Size == 0)
+                {
+                    return _reposRepository.GetCommitsCountByRepositories(_client, "");
+                }
+                return _reposRepository.GetCommitsCountByRepositories(_client, repo.Name);
+            }).ToList();
+
+            var commitsResults = await Task.WhenAll(getCommitsTasks);
+
+            for (int i = 0; i < repos.Count; i++)
+            {
+                var repoDto = _mappingService.MapRepositoryToReposDto(repos[i]);
+                repoDto.CommitCount = commitsResults[i];
                 reposDto.Add(repoDto);
             }
+
             return reposDto;
         }
 
