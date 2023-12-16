@@ -4,6 +4,7 @@ import { Button, Text, Appbar, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import agent from "../../api/agent";
+import React from "react";
 
 interface props {
   email: string;
@@ -11,6 +12,7 @@ interface props {
 }
 
 const LoginScreen = () => {
+  const [hidePassword, setHidePassword] = React.useState(true);
   const router = useRouter();
   const handleSubmit = (data: props) => {
     console.log(data);
@@ -18,11 +20,15 @@ const LoginScreen = () => {
     agent.Auth.login(data.email, data.password)
       .then((response) => {
         console.log(response);
-        router.push("/main/repos");
+        router.push("/(drawer)/repos/repository");
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleHidePassword = () => {
+    setHidePassword(!hidePassword);
   };
 
   return (
@@ -42,6 +48,7 @@ const LoginScreen = () => {
               onBlur={handleBlur("email")}
               style={styles.input}
               keyboardType="email-address"
+              left={<TextInput.Icon icon="email" />}
             />
             <TextInput
               label="Contraseña"
@@ -49,7 +56,14 @@ const LoginScreen = () => {
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
               style={styles.input}
-              secureTextEntry={true}
+              secureTextEntry={hidePassword}
+              left={<TextInput.Icon icon="lock" />}
+              right={
+                <TextInput.Icon
+                  icon={hidePassword ? "eye" : "eye-off"}
+                  onPress={() => handleHidePassword()}
+                />
+              }
             />
             <Button
               mode="contained"

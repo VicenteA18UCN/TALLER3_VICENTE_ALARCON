@@ -16,6 +16,10 @@ const Auth = {
     register: (fullname:string, email:string, birthday:number , rut:string) => requests.post('/auth/register', {fullname, email, birthday, rut})
 };
 
-const agent = { Auth };
+const Repository = {
+    list: () => requests.get('/repositories'),
+};
+
+const agent = { Auth, Repository };
 
 export default agent;

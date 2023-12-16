@@ -4,7 +4,7 @@ import { Appbar } from "react-native-paper";
 
 import { View } from "react-native";
 
-const EnterLayout = () => {
+const ReposLayout = () => {
   return (
     <>
       <Stack></Stack>
@@ -12,4 +12,4 @@ const EnterLayout = () => {
   );
 };
 
-export default EnterLayout;
+export default ReposLayout;
