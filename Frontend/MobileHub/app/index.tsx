@@ -1,7 +1,13 @@
+import { Stack } from "expo-router";
 import HomeScreen from "../components/HomeScreen";
 
 const Index = () => {
-  return <HomeScreen />;
+  return (
+    <>
+      <Stack.Screen options={{ headerShown: true, title: "MobileHub" }} />
+      <HomeScreen />
+    </>
+  );
 };
 
 export default Index;

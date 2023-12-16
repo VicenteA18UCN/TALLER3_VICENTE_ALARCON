@@ -1,6 +1,6 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
-axios.defaults.baseURL = 'http://192.168.0.2:5000/api';
+axios.defaults.baseURL = 'http://192.168.0.13:5000/api';
 
 const responseBody = (response: AxiosResponse) => response.data;
 

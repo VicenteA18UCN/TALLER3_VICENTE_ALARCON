@@ -2,6 +2,7 @@ import { Formik } from "formik";
 import { View, StyleSheet, Image } from "react-native";
 import { Button, Text, Appbar, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import agent from "../../api/agent";
 
 interface props {
@@ -10,12 +11,14 @@ interface props {
 }
 
 const LoginScreen = () => {
+  const router = useRouter();
   const handleSubmit = (data: props) => {
     console.log(data);
     console.log(data.email);
     agent.Auth.login(data.email, data.password)
       .then((response) => {
         console.log(response);
+        router.push("/main/repos");
       })
       .catch((error) => {
         console.log(error);
