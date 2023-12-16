@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { View, StyleSheet, Image } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,20 +11,24 @@ const HomeScreen = () => {
         source={require("../assets/images/MobileHub.png")}
         style={styles.logo}
       />
-      <Button
-        mode="contained"
-        onPress={() => console.log("Pressed")}
-        style={styles.button}
-      >
-        Iniciar Sesión
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={() => console.log("Pressed")}
-        style={styles.button}
-      >
-        Regístrarme
-      </Button>
+      <Link href="/auth/login" asChild>
+        <Button
+          mode="contained"
+          onPress={() => console.log("Pressed")}
+          style={styles.button}
+        >
+          Iniciar Sesión
+        </Button>
+      </Link>
+      <Link href="/register/create" asChild>
+        <Button
+          mode="outlined"
+          onPress={() => console.log("Pressed")}
+          style={styles.button}
+        >
+          Regístrarme
+        </Button>
+      </Link>
     </SafeAreaView>
   );
 };
