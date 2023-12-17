@@ -11,6 +11,7 @@ const SignOff = () => {
   useEffect(() => {
     dispatch(logout());
     AsyncStorage.removeItem("token");
+
     route.replace("/");
   }, []);
 

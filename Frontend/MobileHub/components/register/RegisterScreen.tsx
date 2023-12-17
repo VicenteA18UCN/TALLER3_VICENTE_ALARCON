@@ -1,9 +1,11 @@
 import { Formik } from "formik";
-import { View, StyleSheet, Image } from "react-native";
-import { Button, Text, Appbar, TextInput } from "react-native-paper";
+import { View, StyleSheet, Image, Touchable, Keyboard } from "react-native";
+import { Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
 import { useRouter } from "expo-router";
+import Toast from "react-native-root-toast";
+import { format, clean } from "rut.js";
 
 interface props {
   fullname: string;
@@ -17,14 +19,96 @@ const RegisterScreen = () => {
   const handleSubmit = (data: props, resetForm: any) => {
     console.log(data);
     const birthday = parseInt(data.birthday);
-    agent.Auth.register(data.fullname, data.email, birthday, data.rut)
+    const rut = clean(data.rut);
+    console.log(format(rut));
+    if (
+      data.fullname === "" ||
+      data.email === "" ||
+      data.rut === "" ||
+      data.birthday === ""
+    ) {
+      Toast.show("¡Complete todos los campos!", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        containerStyle: {
+          backgroundColor: "#FF0000",
+        },
+      });
+      return;
+    }
+    agent.Auth.register(data.fullname, data.email, birthday, format(rut))
       .then((response) => {
         console.log(response);
         router.push("/");
+        Toast.show("¡Registro exitoso!", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#4BB543",
+          },
+        });
         resetForm();
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.data);
+        console.log(error.data.status);
+        let errorMessage: string = "Ha ocurrido un error. Intente nuevamente.";
+        switch (error.data.status) {
+          case 400:
+            if (error.data.errors?.Fullname) {
+              if (
+                error.data.errors.Fullname.includes(
+                  "The fullname must be at least 10 characters"
+                )
+              ) {
+                console.log(error.data.errors.Fullname);
+                errorMessage = "El nombre debe tener al menos 10 caracteres.";
+              } else if (
+                error.data.errors.Fullname.includes(
+                  "The fullname must be less than 150 characters"
+                )
+              ) {
+                errorMessage = "El nombre debe tener menos de 150 caracteres.";
+              }
+            } else if (error.data.errors?.Rut) {
+              if (error.data.errors.Rut.includes("The rut is not valid")) {
+                errorMessage = "El rut no es válido.";
+              }
+            } else if (error.data.errors?.Birthday) {
+              if (
+                error.data.errors.Birthday.includes("The birthday is not valid")
+              ) {
+                errorMessage = "El año de nacimiento no es válido.";
+              }
+            } else if (error.data.errors?.Email) {
+              if (error.data.errors.Email.includes("The email is not valid")) {
+                errorMessage = "El correo electrónico no es válido.";
+              }
+            }
+            break;
+          case 500:
+            errorMessage = "Ha ocurrido un error. Intente nuevamente.";
+            break;
+        }
+        Toast.show(errorMessage, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#FF0000",
+          },
+        });
       });
   };
 
@@ -50,8 +134,16 @@ const RegisterScreen = () => {
               style={styles.input}
             />
             <TextInput
+              label="Año de nacimiento"
+              value={values.birthday.toString()}
+              onChangeText={handleChange("birthday")}
+              onBlur={handleBlur("birthday")}
+              style={styles.input}
+              keyboardType="numeric"
+            />
+            <TextInput
               label="Rut"
-              value={values.rut}
+              value={values.rut !== "" ? format(values.rut) : ""}
               onChangeText={handleChange("rut")}
               onBlur={handleBlur("rut")}
               style={styles.input}
@@ -62,14 +154,6 @@ const RegisterScreen = () => {
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
               style={styles.input}
-            />
-            <TextInput
-              label="Año de nacimiento"
-              value={values.birthday.toString()}
-              onChangeText={handleChange("birthday")}
-              onBlur={handleBlur("birthday")}
-              style={styles.input}
-              keyboardType="numeric"
             />
 
             <Button

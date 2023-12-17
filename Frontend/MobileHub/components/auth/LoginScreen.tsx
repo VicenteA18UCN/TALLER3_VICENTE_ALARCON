@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/userSlice";
 import { selectEmail } from "../../store/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-root-toast";
 
 interface props {
   email: string;
@@ -21,11 +22,24 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const email = useSelector(selectEmail);
-  console.log(email);
 
   const handleSubmit = (data: props, resetForm: any) => {
+    if (data.email === "" || data.password === "") {
+      Toast.show("¡Complete todos los campos!", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        containerStyle: {
+          backgroundColor: "#FF0000",
+        },
+      });
+      return;
+    }
     console.log(data);
-    console.log(data.email);
+
     agent.Auth.login(data.email, data.password)
       .then((response) => {
         console.log(response);
@@ -35,7 +49,36 @@ const LoginScreen = () => {
         resetForm();
       })
       .catch((error) => {
-        console.log(error);
+        let errorDefault: string = "Ha ocurrido un error. Intente nuevamente.";
+        console.log(error.data);
+        switch (error.status) {
+          case 400:
+            if (error.data.errors?.Email) {
+              if (error.data.errors.Email.includes("The email is not valid")) {
+                errorDefault = "El correo electrónico no es válido.";
+              }
+            } else if (error.data === "Invalid Credentials") {
+              errorDefault = "Credenciales inválidas.";
+            }
+            break;
+          case 500:
+            errorDefault = "Ha ocurrido un error. Intente nuevamente.";
+            break;
+          default:
+            break;
+        }
+
+        Toast.show(errorDefault, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#FF0000",
+          },
+        });
       });
   };
 

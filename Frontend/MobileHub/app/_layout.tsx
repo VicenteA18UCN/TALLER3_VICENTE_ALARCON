@@ -5,6 +5,8 @@ import { Slot, Stack } from "expo-router";
 import { Provider } from "react-redux";
 import { store, persistor } from "../store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { RootSiblingParent } from "react-native-root-siblings";
+import Root from "./+html";
 
 const theme = {
   ...Theme,
@@ -21,7 +23,9 @@ const HomeLayout = () => {
       <PersistGate persistor={persistor}>
         <PaperProvider theme={theme}>
           <SafeAreaProvider>
-            <Stack screenOptions={{ headerShown: false }} />
+            <RootSiblingParent>
+              <Stack screenOptions={{ headerShown: false }} />
+            </RootSiblingParent>
           </SafeAreaProvider>
         </PaperProvider>
       </PersistGate>

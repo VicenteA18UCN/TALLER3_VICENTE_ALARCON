@@ -6,7 +6,7 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { selectEmail } from "../../store/userSlice";
-
+import Toast from "react-native-root-toast";
 import { Formik } from "formik";
 import { ChangePwd } from "../../models/ChangePwd";
 
@@ -42,15 +42,78 @@ const UpdateScreen = () => {
   const email = useSelector(selectEmail);
 
   const handleSubmit = (data: ChangePwd) => {
-    console.log(email);
-    console.log(data);
+    if (
+      data.currentPassword === "" ||
+      data.newPassword === "" ||
+      data.confirmNewPassword === ""
+    ) {
+      Toast.show("¡Complete todos los campos!", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        containerStyle: {
+          backgroundColor: "#FF0000",
+        },
+      });
+      return;
+    } else if (data.newPassword !== data.confirmNewPassword) {
+      Toast.show("¡Las contraseñas no coinciden!", {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        containerStyle: {
+          backgroundColor: "#FF0000",
+        },
+      });
+      return;
+    }
     agent.Auth.password(email, data)
       .then((response) => {
         console.log(response);
+        Toast.show("¡Contraseña cambiada!", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#4BB543",
+          },
+        });
         router.push("/(drawer)/repos/repository");
       })
       .catch((error) => {
-        console.log(error);
+        let errorDefault: string = "Ha ocurrido un error. Intente nuevamente.";
+        switch (error.status) {
+          case 400:
+            if (error.data == "Invalid Credentials") {
+              errorDefault = "La contraseña actual es incorrecta.";
+            }
+            break;
+          case 500:
+            errorDefault = "Ha ocurrido un error. Intente nuevamente.";
+            break;
+          default:
+            break;
+        }
+        Toast.show(errorDefault, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#FF0000",
+          },
+        });
       });
   };
 
@@ -73,6 +136,7 @@ const UpdateScreen = () => {
               style={styles.input}
               onChangeText={handleChange("currentPassword")}
               onBlur={handleBlur("currentPassword")}
+              secureTextEntry={true}
             />
             <TextInput
               label="Contraseña nueva"
@@ -80,6 +144,7 @@ const UpdateScreen = () => {
               style={styles.input}
               onChangeText={handleChange("newPassword")}
               onBlur={handleBlur("newPassword")}
+              secureTextEntry={true}
             />
             <TextInput
               label="Confirmar contraseña nueva"
@@ -87,6 +152,7 @@ const UpdateScreen = () => {
               style={styles.input}
               onChangeText={handleChange("confirmNewPassword")}
               onBlur={handleBlur("confirmNewPassword")}
+              secureTextEntry={true}
             />
             <Button
               mode="contained"

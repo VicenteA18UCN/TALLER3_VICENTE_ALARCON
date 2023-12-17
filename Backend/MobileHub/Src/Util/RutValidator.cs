@@ -19,7 +19,6 @@ namespace MobileHub.Src.Util
             rut = rut.Replace(".", "").ToUpper();
             if (!RegularExpressions.RutRegex().IsMatch(rut))
                 return false;
-
             string dv = rut.Substring(rut.Length - 1, 1);
             char[] dash = { '-' };
             string[] splittedRut = rut.Split(dash);

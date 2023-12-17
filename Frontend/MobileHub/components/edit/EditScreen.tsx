@@ -9,6 +9,7 @@ import { selectEmail } from "../../store/userSlice";
 import { User } from "../../models/User";
 import { Formik } from "formik";
 import { UserUpdate } from "../../models/UserUpdate";
+import Toast from "react-native-root-toast";
 
 const style = StyleSheet.create({
   container: {
@@ -75,10 +76,67 @@ const EditScreen = () => {
       .then((response) => {
         console.log(response);
         getUser();
+        Toast.show("¡Perfil actualizado!", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#4BB543",
+          },
+        });
         setIsDisabled(true);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.data);
+        console.log(error.data.status);
+        let errorMessage: string = "Ha ocurrido un error. Intente nuevamente.";
+        switch (error.data.status) {
+          case 400:
+            if (error.data.errors?.Fullname) {
+              if (
+                error.data.errors.Fullname.includes(
+                  "The fullname must be at least 10 characters"
+                )
+              ) {
+                console.log(error.data.errors.Fullname);
+                errorMessage = "El nombre debe tener al menos 10 caracteres.";
+              } else if (
+                error.data.errors.Fullname.includes(
+                  "The fullname must be less than 150 characters"
+                )
+              ) {
+                errorMessage = "El nombre debe tener menos de 150 caracteres.";
+              }
+            } else if (error.data.errors?.Birthday) {
+              if (
+                error.data.errors.Birthday.includes("The birthday is not valid")
+              ) {
+                errorMessage = "El año de nacimiento no es válido.";
+              }
+            } else if (error.data.errors?.Email) {
+              if (error.data.errors.Email.includes("The email is not valid")) {
+                errorMessage = "El correo electrónico no es válido.";
+              }
+            }
+            break;
+          case 500:
+            errorMessage = "Ha ocurrido un error. Intente nuevamente.";
+            break;
+        }
+        Toast.show(errorMessage, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          containerStyle: {
+            backgroundColor: "#FF0000",
+          },
+        });
       });
   };
 
@@ -112,15 +170,6 @@ const EditScreen = () => {
               onBlur={handleBlur("fullname")}
             />
             <TextInput
-              label="Correo electrónico"
-              value={values.email}
-              style={styles.input}
-              left={<TextInput.Icon icon="email" />}
-              disabled={isDisabled}
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-            />
-            <TextInput
               label="Año de nacimiento"
               value={values.birthday}
               style={styles.input}
@@ -130,6 +179,16 @@ const EditScreen = () => {
               onBlur={handleBlur("birthday")}
               keyboardType="numeric"
             />
+            <TextInput
+              label="Correo electrónico"
+              value={values.email}
+              style={styles.input}
+              left={<TextInput.Icon icon="email" />}
+              disabled={isDisabled}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
+            />
+
             {isDisabled ? (
               <Button
                 mode="contained"

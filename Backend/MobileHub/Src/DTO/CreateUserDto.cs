@@ -5,9 +5,9 @@ namespace MobileHub.Src.DTO
 {
     public class CreateUserDto
     {
-        [Required(ErrorMessage = "The password is required")]
-        [MaxLength(150, ErrorMessage = "The password must be less than 150 characters")]
-        [MinLength(10, ErrorMessage = "The password must be at least 10 characters")]
+        [Required(ErrorMessage = "The fullname is required")]
+        [MaxLength(150, ErrorMessage = "The fullname must be less than 150 characters")]
+        [MinLength(10, ErrorMessage = "The fullname must be at least 10 characters")]
         public string Fullname { get; set; } = string.Empty;
         [Required(ErrorMessage = "The rut is required")]
         [Rut(ErrorMessage = "The rut is not valid")]
