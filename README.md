@@ -30,8 +30,21 @@ Luego, ingresar a la carpeta del proyecto:
 
 ```bash
 cd TALLER3_VICENTE_ALARCON
-cd backend
+cd Backend
 cd MobileHub
+```
+
+Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renombrarlo a _.env_, de la siguiente forma:
+
+```bash
+cp .env.example .env
+```
+
+Luego, modificar los siguientes parametros:
+
+```bash
+GITHUB_TOKEN= # Token de GitHub
+SECRET_KEY= # Llave secreta para JWT
 ```
 
 Una vez dentro de la carpeta, ejecutar los siguientes comandos, para la instalación de las dependencias, la creación de la base de datos y la ejecución del proyecto:
@@ -46,8 +59,26 @@ Luego abrir otra consola de comando en la carpeta donde esta alojada el proyecto
 
 ```bash
 cd TALLER3_VICENTE_ALARCON
-cd frontend
+cd Frontend
 cd MobileHub
+```
+
+Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renombrarlo a _.env_, de la siguiente forma:
+
+```bash
+cp .env.example .env
+```
+
+Luego, modificar los siguientes parametros:
+
+```bash
+IP_V4= # IP V4 de tu computador
+```
+
+Para obtener la IP V4 de tu computador, se debe abrir una consola de comando (en Windows) y colocar lo siguiente:
+
+```bash
+ipconfig
 ```
 
 Una vez dentro de la carpeta, ejecutar los siguientes comandos, para la instalación de las dependencias y la ejecución del proyecto:
