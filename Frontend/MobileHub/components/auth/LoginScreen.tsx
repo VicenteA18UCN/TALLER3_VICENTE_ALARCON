@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     gap: 20,
+    backgroundColor: "#ffffff",
   },
   button: {
     width: "100%",
@@ -163,5 +164,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
+    backgroundColor: "#ffffff",
   },
 });

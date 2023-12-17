@@ -1,5 +1,5 @@
-import { View, StyleSheet, Image } from "react-native";
-import { Text, ActivityIndicator, TextInput, Button } from "react-native-paper";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Text, TextInput, Button, Checkbox } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
 import React from "react";
@@ -40,6 +40,7 @@ const style = StyleSheet.create({
 const UpdateScreen = () => {
   const router = useRouter();
   const email = useSelector(selectEmail);
+  const [checked, setChecked] = React.useState<boolean>(false);
 
   const handleSubmit = (data: ChangePwd) => {
     if (
@@ -103,6 +104,7 @@ const UpdateScreen = () => {
           default:
             break;
         }
+
         Toast.show(errorDefault, {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -120,50 +122,61 @@ const UpdateScreen = () => {
   return (
     <SafeAreaView style={style.container}>
       <Text variant="headlineSmall">¿Deseas cambiar contraseña?</Text>
-      <Formik
-        initialValues={{
-          currentPassword: "",
-          newPassword: "",
-          confirmNewPassword: "",
-        }}
-        onSubmit={(values) => handleSubmit(values)}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View style={styles.form}>
-            <TextInput
-              label="Contraseña actual"
-              value={values.currentPassword}
-              style={styles.input}
-              onChangeText={handleChange("currentPassword")}
-              onBlur={handleBlur("currentPassword")}
-              secureTextEntry={true}
-            />
-            <TextInput
-              label="Contraseña nueva"
-              value={values.newPassword}
-              style={styles.input}
-              onChangeText={handleChange("newPassword")}
-              onBlur={handleBlur("newPassword")}
-              secureTextEntry={true}
-            />
-            <TextInput
-              label="Confirmar contraseña nueva"
-              value={values.confirmNewPassword}
-              style={styles.input}
-              onChangeText={handleChange("confirmNewPassword")}
-              onBlur={handleBlur("confirmNewPassword")}
-              secureTextEntry={true}
-            />
-            <Button
-              mode="contained"
-              onPress={() => handleSubmit()}
-              style={styles.button}
-            >
-              Cambiar contraseña
-            </Button>
-          </View>
-        )}
-      </Formik>
+      <ScrollView style={style.scrollView}>
+        <Formik
+          initialValues={{
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+          }}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View style={styles.form}>
+              <TextInput
+                label="Contraseña actual"
+                value={values.currentPassword}
+                style={styles.input}
+                onChangeText={handleChange("currentPassword")}
+                onBlur={handleBlur("currentPassword")}
+                secureTextEntry={!checked}
+              />
+              <TextInput
+                label="Contraseña nueva"
+                value={values.newPassword}
+                style={styles.input}
+                onChangeText={handleChange("newPassword")}
+                onBlur={handleBlur("newPassword")}
+                secureTextEntry={!checked}
+              />
+              <TextInput
+                label="Confirmar contraseña nueva"
+                value={values.confirmNewPassword}
+                style={styles.input}
+                onChangeText={handleChange("confirmNewPassword")}
+                onBlur={handleBlur("confirmNewPassword")}
+                secureTextEntry={!checked}
+              />
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text variant="labelLarge">Mostrar contraseñas</Text>
+                <Checkbox
+                  status={checked ? "checked" : "unchecked"}
+                  onPress={() => {
+                    setChecked(!checked);
+                  }}
+                ></Checkbox>
+              </View>
+              <Button
+                mode="contained"
+                onPress={() => handleSubmit()}
+                style={styles.button}
+              >
+                Cambiar contraseña
+              </Button>
+            </View>
+          )}
+        </Formik>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -193,5 +206,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
+    backgroundColor: "#ffffff",
   },
 });

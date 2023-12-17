@@ -6,7 +6,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text variant="displayMedium">¡Bienvenid@!</Text>
+      <Text variant="displayMedium" style={{ fontWeight: "bold" }}>
+        ¡Bienvenid@!
+      </Text>
       <Image
         source={require("../assets/images/MobileHub.png")}
         style={styles.logo}

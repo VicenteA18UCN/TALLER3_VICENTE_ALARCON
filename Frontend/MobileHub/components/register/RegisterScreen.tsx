@@ -105,6 +105,11 @@ const RegisterScreen = () => {
             errorMessage = "Ha ocurrido un error. Intente nuevamente.";
             break;
         }
+        if (error.data === "Email already exists") {
+          errorMessage = "El correo electrónico ya está registrado.";
+        } else if (error.data === "Rut already exists") {
+          errorMessage = "El rut ya está registrado.";
+        }
         Toast.show(errorMessage, {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -212,5 +217,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 20,
+    backgroundColor: "#ffffff",
   },
 });

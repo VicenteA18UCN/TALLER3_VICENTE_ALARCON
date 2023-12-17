@@ -1,6 +1,16 @@
 import { Drawer } from "expo-router/drawer";
 import { useDispatch } from "react-redux";
-import { Icon, MD3Colors } from "react-native-paper";
+import { Icon, MD3LightTheme as Theme } from "react-native-paper";
+import React from "react";
+
+const theme = {
+  ...Theme,
+  colors: {
+    ...Theme.colors,
+    primary: "#FCAF43",
+    accent: "#FCAF43",
+  },
+};
 
 const DrawerLayout = () => {
   return (
@@ -18,6 +28,7 @@ const DrawerLayout = () => {
             drawerIcon: ({ color, size, focused }) => (
               <Icon source="book" color={color} size={size} />
             ),
+            drawerActiveTintColor: "#FCAF43",
           }}
         />
         <Drawer.Screen
@@ -28,6 +39,7 @@ const DrawerLayout = () => {
             drawerIcon: ({ color, size, focused }) => (
               <Icon source="account" color={color} size={size} />
             ),
+            drawerActiveTintColor: "#FCAF43",
           }}
         />
         <Drawer.Screen
@@ -38,6 +50,7 @@ const DrawerLayout = () => {
             drawerIcon: ({ color, size, focused }) => (
               <Icon source="lock" color={color} size={size} />
             ),
+            drawerActiveTintColor: "#FCAF43",
           }}
         />
         <Drawer.Screen

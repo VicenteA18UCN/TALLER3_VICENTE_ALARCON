@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, ActivityIndicator, TextInput, Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
@@ -126,6 +126,10 @@ const EditScreen = () => {
             errorMessage = "Ha ocurrido un error. Intente nuevamente.";
             break;
         }
+        if (error.data === "Email already exists") {
+          errorMessage = "El correo electrónico ya está registrado.";
+        }
+
         Toast.show(errorMessage, {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -150,74 +154,76 @@ const EditScreen = () => {
   return (
     <SafeAreaView style={style.container}>
       <Text variant="headlineLarge">Información Personal</Text>
-      <Formik
-        initialValues={{
-          fullname: user?.fullname,
-          email: user?.email,
-          birthday: user?.birthday?.toString(),
-        }}
-        onSubmit={(values) => handleSubmit(values)}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View style={styles.form}>
-            <TextInput
-              label="Nombre"
-              value={values.fullname}
-              style={styles.input}
-              left={<TextInput.Icon icon="account" />}
-              disabled={isDisabled}
-              onChangeText={handleChange("fullname")}
-              onBlur={handleBlur("fullname")}
-            />
-            <TextInput
-              label="Año de nacimiento"
-              value={values.birthday}
-              style={styles.input}
-              left={<TextInput.Icon icon="calendar" />}
-              disabled={isDisabled}
-              onChangeText={handleChange("birthday")}
-              onBlur={handleBlur("birthday")}
-              keyboardType="numeric"
-            />
-            <TextInput
-              label="Correo electrónico"
-              value={values.email}
-              style={styles.input}
-              left={<TextInput.Icon icon="email" />}
-              disabled={isDisabled}
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-            />
+      <ScrollView style={styles.input}>
+        <Formik
+          initialValues={{
+            fullname: user?.fullname,
+            email: user?.email,
+            birthday: user?.birthday?.toString(),
+          }}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View style={styles.form}>
+              <TextInput
+                label="Nombre"
+                value={values.fullname}
+                style={styles.input}
+                left={<TextInput.Icon icon="account" />}
+                disabled={isDisabled}
+                onChangeText={handleChange("fullname")}
+                onBlur={handleBlur("fullname")}
+              />
+              <TextInput
+                label="Año de nacimiento"
+                value={values.birthday}
+                style={styles.input}
+                left={<TextInput.Icon icon="calendar" />}
+                disabled={isDisabled}
+                onChangeText={handleChange("birthday")}
+                onBlur={handleBlur("birthday")}
+                keyboardType="numeric"
+              />
+              <TextInput
+                label="Correo electrónico"
+                value={values.email}
+                style={styles.input}
+                left={<TextInput.Icon icon="email" />}
+                disabled={isDisabled}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+              />
 
-            {isDisabled ? (
-              <Button
-                mode="contained"
-                onPress={handleEdit}
-                style={styles.button}
-              >
-                Editar perfil
-              </Button>
-            ) : (
-              <>
+              {isDisabled ? (
                 <Button
                   mode="contained"
-                  onPress={() => handleSubmit()}
-                  style={styles.button}
-                >
-                  Guardar
-                </Button>
-                <Button
-                  mode="outlined"
                   onPress={handleEdit}
                   style={styles.button}
                 >
-                  Cancelar
+                  Editar perfil
                 </Button>
-              </>
-            )}
-          </View>
-        )}
-      </Formik>
+              ) : (
+                <>
+                  <Button
+                    mode="contained"
+                    onPress={() => handleSubmit()}
+                    style={styles.button}
+                  >
+                    Guardar
+                  </Button>
+                  <Button
+                    mode="outlined"
+                    onPress={handleEdit}
+                    style={styles.button}
+                  >
+                    Cancelar
+                  </Button>
+                </>
+              )}
+            </View>
+          )}
+        </Formik>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -247,5 +253,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
+    backgroundColor: "#ffffff",
   },
 });

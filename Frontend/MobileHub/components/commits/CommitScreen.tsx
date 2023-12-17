@@ -1,5 +1,11 @@
 import { View, StyleSheet, Image } from "react-native";
-import { Button, Text, Card, ActivityIndicator } from "react-native-paper";
+import {
+  Button,
+  Text,
+  Card,
+  ActivityIndicator,
+  Divider,
+} from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
 import React from "react";
@@ -76,16 +82,22 @@ const CommitScreen = ({ commitName }: Props) => {
             <Card.Title
               title={commit.message}
               titleVariant={"headlineSmall"}
-              titleNumberOfLines={3}
+              titleNumberOfLines={4}
+              style={{ marginTop: 4, marginBottom: 4 }}
             />
             <Card.Content>
+              <Divider style={{ width: "100%", marginBottom: 4 }} />
               <Text variant="bodyMedium">
                 Fecha: {commit.date.split("T")[0]}
               </Text>
               <Text variant="bodyMedium">
-                Hora: {commit.date.split("T")[1]}
+                Hora: {commit.date.split("T")[1].split("+")[0]}
               </Text>
               <Text variant="bodyMedium">Usuario: {commit.user}</Text>
+              <Image
+                source={{ uri: commit.avatarUrl }}
+                style={{ width: 50, height: 50, marginLeft: "auto" }}
+              />
             </Card.Content>
           </Card>
         ))}

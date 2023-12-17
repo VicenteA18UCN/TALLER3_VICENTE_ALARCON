@@ -7,7 +7,7 @@ import { View } from "react-native";
 const LogoutLayout = () => {
   return (
     <>
-      <Stack></Stack>
+      <Stack screenOptions={{ title: "" }}></Stack>
     </>
   );
 };
