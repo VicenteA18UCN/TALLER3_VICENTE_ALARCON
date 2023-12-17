@@ -2,10 +2,11 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { UserUpdate } from "../models/UserUpdate";
 import { ChangePwd } from "../models/ChangePwd";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {IP_V4} from '@env';
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 0));
 
-axios.defaults.baseURL = "http://192.168.0.10:5000/api";
+axios.defaults.baseURL = `http://${IP_V4}:5000/api`;
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
