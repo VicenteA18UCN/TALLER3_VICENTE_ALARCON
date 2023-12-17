@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import { UserUpdate } from '../models/UserUpdate';
+import { ChangePwd } from '../models/ChangePwd';
 
 axios.defaults.baseURL = 'http://192.168.0.2:5000/api';
 
@@ -14,7 +15,8 @@ const requests = {
 
 const Auth = {
     login: (email: string, password: string) => requests.post('/auth/login', {email, password}),
-    register: (fullname:string, email:string, birthday:number , rut:string) => requests.post('/auth/register', {fullname, email, birthday, rut})
+    register: (fullname:string, email:string, birthday:number , rut:string) => requests.post('/auth/register', {fullname, email, birthday, rut}),
+    password: (email: string, newPassword: ChangePwd) => requests.post(`/auth/update-password/${email}`, newPassword),
 };
 
 const Repository = {

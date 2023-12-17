@@ -35,6 +35,7 @@ namespace MobileHub.Src.Services.Interfaces
 
         public Task<CreateUserDto?> Register(CreateUserDto createUserDto);
 
+        public Task<GetUserDto?> UpdatePassword(UpdatePasswordDto updatePasswordDto, GetUserDto userDto);
 
     }
 }

@@ -7,6 +7,8 @@ using System.Text;
 using MobileHub.Src.DTO;
 using MobileHub.Src.Util;
 using DotNetEnv;
+using MobileHub.Src.Models;
+using MobileHub.Src.DTO.Users;
 namespace MobileHub.Src.Services
 {
     public class AuthService : IAuthService
@@ -65,6 +67,17 @@ namespace MobileHub.Src.Services
             var user = _mappingService.CreateClientDtoToUser(createUserDto);
             var createdUser = await _usersRepository.Add(user);
             var mappedDto = _mappingService.MapUserToCreateUserDto(createdUser);
+            return mappedDto;
+        }
+
+        public async Task<GetUserDto?> UpdatePassword(UpdatePasswordDto updatePasswordDto, GetUserDto userDto)
+        {
+            var user = await _usersRepository.GetByEmail(userDto.Email);
+            if (user == null) return null;
+            var password = BCrypt.Net.BCrypt.HashPassword(updatePasswordDto.NewPassword);
+            user.Password = password;
+            var updatedUser = await _usersRepository.Update(user);
+            var mappedDto = _mappingService.MapUserToGetUserDto(updatedUser);
             return mappedDto;
         }
 

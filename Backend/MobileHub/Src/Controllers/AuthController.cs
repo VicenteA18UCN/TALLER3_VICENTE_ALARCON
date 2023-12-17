@@ -80,5 +80,26 @@ namespace MobileHub.Src.Controllers
             return Ok(new { Token = token });
         }
 
+        [HttpPost("update-password/{email}")]
+        public async Task<ActionResult<string>> UpdatePassword(UpdatePasswordDto updatePasswordDto, string email)
+        {
+            if (string.IsNullOrEmpty(updatePasswordDto.CurrentPassword) || string.IsNullOrEmpty(updatePasswordDto.NewPassword) || string.IsNullOrEmpty(updatePasswordDto.ConfirmNewPassword))
+            {
+                return BadRequest("Empty fields");
+            }
+
+            var user = await _authService.GetUserByEmail(email);
+            if (user == null) return BadRequest("User not found");
+
+            var checkCredentials = await _authService.CheckCredentials(new LoginUserDto { Email = email, Password = updatePasswordDto.CurrentPassword });
+            if (!checkCredentials) return BadRequest("Invalid Credentials");
+
+            var updatedUser = await _authService.UpdatePassword(updatePasswordDto, user);
+            if (updatedUser == null) return BadRequest("Error updating password");
+
+            return Ok(updatedUser);
+
+        }
+
     }
 }

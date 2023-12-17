@@ -26,6 +26,16 @@ const DrawerLayout = () => {
             ),
           }}
         />
+        <Drawer.Screen
+          name="change"
+          options={{
+            drawerLabel: "Cambiar contraseña",
+            title: "Cambiar contraseña",
+            drawerIcon: ({ color, size, focused }) => (
+              <Icon source="lock" color={color} size={size} />
+            ),
+          }}
+        />
       </Drawer>
     </>
   );
