@@ -3,6 +3,7 @@ import { View, StyleSheet, Image } from "react-native";
 import { Button, Text, Appbar, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
+import { useRouter } from "expo-router";
 
 interface props {
   fullname: string;
@@ -12,12 +13,15 @@ interface props {
 }
 
 const RegisterScreen = () => {
-  const handleSubmit = (data: props) => {
+  const router = useRouter();
+  const handleSubmit = (data: props, resetForm: any) => {
     console.log(data);
     const birthday = parseInt(data.birthday);
     agent.Auth.register(data.fullname, data.email, birthday, data.rut)
       .then((response) => {
         console.log(response);
+        router.push("/");
+        resetForm();
       })
       .catch((error) => {
         console.log(error);
@@ -34,7 +38,7 @@ const RegisterScreen = () => {
           rut: "",
           birthday: "",
         }}
-        onSubmit={(values) => handleSubmit(values)}
+        onSubmit={(values, actions) => handleSubmit(values, actions.resetForm)}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.form}>

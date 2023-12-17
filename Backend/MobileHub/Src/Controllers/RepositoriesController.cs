@@ -3,6 +3,7 @@ using DotNetEnv;
 using Octokit;
 using MobileHub.Src.Repositories.Interfaces;
 using MobileHub.Src.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MobileHub.Src.Controllers
 {
@@ -16,14 +17,14 @@ namespace MobileHub.Src.Controllers
         {
             _reposService = reposService ?? throw new ArgumentNullException(nameof(reposService));
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<GitHubCommit>?>> GetRepos()
         {
             var repos = await _reposService.GetAllRepositories();
             return Ok(repos);
         }
-
+        [Authorize]
         [HttpGet("commits/{repoName}")]
         public async Task<ActionResult<IReadOnlyList<GitHubCommit>?>> GetCommitsByRepo(string repoName)
         {

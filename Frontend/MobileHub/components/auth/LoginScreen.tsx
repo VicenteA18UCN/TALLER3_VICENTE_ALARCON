@@ -8,6 +8,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/userSlice";
 import { selectEmail } from "../../store/userSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface props {
   email: string;
@@ -28,6 +29,7 @@ const LoginScreen = () => {
     agent.Auth.login(data.email, data.password)
       .then((response) => {
         console.log(response);
+        AsyncStorage.setItem("token", response.token);
         dispatch(login(response.token));
         router.push("/(drawer)/repos/repository");
         resetForm();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MobileHub.Src.Services.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 namespace MobileHub.Src.Controllers
 {
     [ApiController]
@@ -31,6 +32,7 @@ namespace MobileHub.Src.Controllers
         /// <response code="200">Retorna un usuario en caso de que exista, con sus datos.</response>
         /// <response code="400">En caso de que el usuario no exista, retorna un BadRequest, con el mensaje "User not found".</response>
         /// <response code="500">En caso de que ocurra un error, retorna un InternalServerError, con el mensaje "Internal Server Error".</response>
+        [Authorize]
         [HttpGet("{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -61,7 +63,7 @@ namespace MobileHub.Src.Controllers
         /// <response code="200">Retorna un usuario en caso de que exista, con sus datos actualizados.</response>
         /// <response code="400">En caso de que el usuario no exista, retorna un BadRequest, con el mensaje "User not found".</response>
         /// <response code="500">En caso de que ocurra un error, retorna un InternalServerError, con el mensaje "Internal Server Error".</response>
-
+        [Authorize]
         [HttpPut("{rut}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

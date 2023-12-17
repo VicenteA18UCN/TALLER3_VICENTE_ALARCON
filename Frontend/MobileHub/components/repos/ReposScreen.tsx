@@ -9,7 +9,7 @@ import { Link, useLocalSearchParams } from "expo-router";
 import { useRouter } from "expo-router";
 import { useNavigation } from "expo-router";
 import { useSelector } from "react-redux";
-import { selectEmail } from "../../store/userSlice";
+import { selectEmail, selectToken } from "../../store/userSlice";
 
 const style = StyleSheet.create({
   container: {
@@ -45,6 +45,8 @@ const ReposScreen = () => {
   const navigation = useNavigation();
   const email = useSelector(selectEmail);
   console.log(email);
+  const token = useSelector(selectToken);
+  console.log(token);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -54,6 +56,7 @@ const ReposScreen = () => {
   const getRepository = () => {
     agent.Repository.list()
       .then((response) => {
+        console.log(response);
         setRepo(response);
         console.log(repo);
       })

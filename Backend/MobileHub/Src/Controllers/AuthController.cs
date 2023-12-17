@@ -4,6 +4,7 @@ using MobileHub.Src.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MobileHub.Src.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MobileHub.Src.Controllers
 {
@@ -40,6 +41,7 @@ namespace MobileHub.Src.Controllers
         /// En caso de que el usuario no exista, retorna un BadRequest, con el mensaje "Invalid Credentials".
         /// En caso de que el token no se genere correctamente, retorna un BadRequest, con el mensaje "Token error". 
         /// </returns>
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginUserDto loginUserDto)
         {
@@ -54,7 +56,7 @@ namespace MobileHub.Src.Controllers
 
             return Ok(new { Token = token });
         }
-
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register(CreateUserDto createUserDto)
         {
@@ -80,7 +82,8 @@ namespace MobileHub.Src.Controllers
             return Ok(new { Token = token });
         }
 
-        [HttpPost("update-password/{email}")]
+        [Authorize]
+        [HttpPut("update-password/{email}")]
         public async Task<ActionResult<string>> UpdatePassword(UpdatePasswordDto updatePasswordDto, string email)
         {
             if (string.IsNullOrEmpty(updatePasswordDto.CurrentPassword) || string.IsNullOrEmpty(updatePasswordDto.NewPassword) || string.IsNullOrEmpty(updatePasswordDto.ConfirmNewPassword))
