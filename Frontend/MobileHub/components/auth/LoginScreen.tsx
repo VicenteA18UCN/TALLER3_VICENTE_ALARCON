@@ -88,7 +88,9 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text variant="displayMedium">¡Hola!</Text>
+      <Text variant="displayMedium" style={{ fontWeight: "bold" }}>
+        ¡Hola!
+      </Text>
       <Text variant="displaySmall">¡Que gusto verte!</Text>
       <Formik
         initialValues={{ email: "", password: "" }}

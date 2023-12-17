@@ -5,7 +5,11 @@ import { Icon, MD3Colors } from "react-native-paper";
 const DrawerLayout = () => {
   return (
     <>
-      <Drawer screenOptions={{ headerShown: false }}>
+      <Drawer
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Drawer.Screen
           name="repos"
           options={{

@@ -173,7 +173,7 @@ const EditScreen = () => {
               label="Año de nacimiento"
               value={values.birthday}
               style={styles.input}
-              left={<TextInput.Icon icon="cake" />}
+              left={<TextInput.Icon icon="calendar" />}
               disabled={isDisabled}
               onChangeText={handleChange("birthday")}
               onBlur={handleBlur("birthday")}

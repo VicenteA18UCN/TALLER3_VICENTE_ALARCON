@@ -114,7 +114,10 @@ const RegisterScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text variant="displayMedium">¡Bienvenid@!</Text>
+      <Text variant="displayMedium" style={{ fontWeight: "bold" }}>
+        ¡Regístrate!
+      </Text>
+      <Text variant="displaySmall">¡Es gratis!</Text>
       <Formik
         initialValues={{
           email: "",
@@ -132,6 +135,7 @@ const RegisterScreen = () => {
               onChangeText={handleChange("fullname")}
               onBlur={handleBlur("fullname")}
               style={styles.input}
+              left={<TextInput.Icon icon="account" />}
             />
             <TextInput
               label="Año de nacimiento"
@@ -140,12 +144,15 @@ const RegisterScreen = () => {
               onBlur={handleBlur("birthday")}
               style={styles.input}
               keyboardType="numeric"
+              left={<TextInput.Icon icon="calendar" />}
             />
             <TextInput
               label="Rut"
+              placeholder="Ej: 12.345.678-9"
               value={values.rut !== "" ? format(values.rut) : ""}
               onChangeText={handleChange("rut")}
               onBlur={handleBlur("rut")}
+              left={<TextInput.Icon icon="account-details" />}
               style={styles.input}
             />
             <TextInput
@@ -154,6 +161,8 @@ const RegisterScreen = () => {
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
               style={styles.input}
+              keyboardType="email-address"
+              left={<TextInput.Icon icon="email" />}
             />
 
             <Button
@@ -178,6 +187,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     gap: 20,
+    backgroundColor: "#fff",
   },
   button: {
     width: "100%",
