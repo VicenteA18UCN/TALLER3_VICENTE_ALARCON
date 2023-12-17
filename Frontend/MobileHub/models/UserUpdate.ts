@@ -1,6 +1,6 @@
 export interface UserUpdate
 {
-    fullname: string,
-    email: string,
-    birthday: number,
+    fullname: string | undefined,
+    email: string | undefined,
+    birthday: number |string | undefined,
 }

@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import { View, StyleSheet, Image } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import { ActivityIndicator, Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import agent from "../../api/agent";
@@ -16,6 +16,7 @@ interface props {
 
 const LoginScreen = () => {
   const [hidePassword, setHidePassword] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -23,7 +24,10 @@ const LoginScreen = () => {
 
   React.useEffect(() => {
     if (email) {
-      router.push("/(drawer)/repos/repository");
+      setIsLoading(true);
+      setTimeout(() => {
+        router.push("/(drawer)/repos/repository");
+      }, 2000);
     }
   }, [email]);
 
@@ -44,6 +48,14 @@ const LoginScreen = () => {
   const handleHidePassword = () => {
     setHidePassword(!hidePassword);
   };
+
+  if (isLoading)
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text variant="displaySmall">Iniciando sesión...</Text>
+        <ActivityIndicator animating={true} size={"large"} />
+      </SafeAreaView>
+    );
 
   return (
     <SafeAreaView style={styles.container}>
