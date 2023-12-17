@@ -72,10 +72,10 @@ cp .env.example .env
 Luego, modificar los siguientes parametros:
 
 ```bash
-IP_V4= # IP V4 de tu computador
+EXPO_PUBLIC_IP_V4= # IPv4 de tu computador
 ```
 
-Para obtener la IP V4 de tu computador, se debe abrir una consola de comando (en Windows) y colocar lo siguiente:
+Para obtener la IPv4 de tu computador, se debe abrir una consola de comando (en Windows) y colocar lo siguiente:
 
 ```bash
 ipconfig

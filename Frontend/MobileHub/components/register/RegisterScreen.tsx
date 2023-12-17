@@ -1,5 +1,12 @@
 import { Formik } from "formik";
-import { View, StyleSheet, Image, Touchable, Keyboard } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Touchable,
+  Keyboard,
+  ScrollView,
+} from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
@@ -118,63 +125,67 @@ const RegisterScreen = () => {
         ¡Regístrate!
       </Text>
       <Text variant="displaySmall">¡Es gratis!</Text>
-      <Formik
-        initialValues={{
-          email: "",
-          fullname: "",
-          rut: "",
-          birthday: "",
-        }}
-        onSubmit={(values, actions) => handleSubmit(values, actions.resetForm)}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View style={styles.form}>
-            <TextInput
-              label="Nombre completo"
-              value={values.fullname}
-              onChangeText={handleChange("fullname")}
-              onBlur={handleBlur("fullname")}
-              style={styles.input}
-              left={<TextInput.Icon icon="account" />}
-            />
-            <TextInput
-              label="Año de nacimiento"
-              value={values.birthday.toString()}
-              onChangeText={handleChange("birthday")}
-              onBlur={handleBlur("birthday")}
-              style={styles.input}
-              keyboardType="numeric"
-              left={<TextInput.Icon icon="calendar" />}
-            />
-            <TextInput
-              label="Rut"
-              placeholder="Ej: 12.345.678-9"
-              value={values.rut !== "" ? format(values.rut) : ""}
-              onChangeText={handleChange("rut")}
-              onBlur={handleBlur("rut")}
-              left={<TextInput.Icon icon="account-details" />}
-              style={styles.input}
-            />
-            <TextInput
-              label="Correo electrónico"
-              value={values.email}
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-              style={styles.input}
-              keyboardType="email-address"
-              left={<TextInput.Icon icon="email" />}
-            />
+      <ScrollView style={styles.form}>
+        <Formik
+          initialValues={{
+            email: "",
+            fullname: "",
+            rut: "",
+            birthday: "",
+          }}
+          onSubmit={(values, actions) =>
+            handleSubmit(values, actions.resetForm)
+          }
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View style={styles.form}>
+              <TextInput
+                label="Nombre completo"
+                value={values.fullname}
+                onChangeText={handleChange("fullname")}
+                onBlur={handleBlur("fullname")}
+                style={styles.input}
+                left={<TextInput.Icon icon="account" />}
+              />
+              <TextInput
+                label="Año de nacimiento"
+                value={values.birthday.toString()}
+                onChangeText={handleChange("birthday")}
+                onBlur={handleBlur("birthday")}
+                style={styles.input}
+                keyboardType="numeric"
+                left={<TextInput.Icon icon="calendar" />}
+              />
+              <TextInput
+                label="Rut"
+                placeholder="Ej: 12.345.678-9"
+                value={values.rut !== "" ? format(values.rut) : ""}
+                onChangeText={handleChange("rut")}
+                onBlur={handleBlur("rut")}
+                left={<TextInput.Icon icon="account-details" />}
+                style={styles.input}
+              />
+              <TextInput
+                label="Correo electrónico"
+                value={values.email}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                style={styles.input}
+                keyboardType="email-address"
+                left={<TextInput.Icon icon="email" />}
+              />
 
-            <Button
-              mode="contained"
-              onPress={() => handleSubmit()}
-              style={styles.button}
-            >
-              Registrarme
-            </Button>
-          </View>
-        )}
-      </Formik>
+              <Button
+                mode="contained"
+                onPress={() => handleSubmit()}
+                style={styles.button}
+              >
+                Registrarme
+              </Button>
+            </View>
+          )}
+        </Formik>
+      </ScrollView>
     </SafeAreaView>
   );
 };

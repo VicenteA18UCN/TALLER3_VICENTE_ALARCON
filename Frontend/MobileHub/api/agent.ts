@@ -2,10 +2,10 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { UserUpdate } from "../models/UserUpdate";
 import { ChangePwd } from "../models/ChangePwd";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {IP_V4} from '@env';
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 0));
 
+const IP_V4 = process.env.EXPO_PUBLIC_IP_V4
 axios.defaults.baseURL = `http://${IP_V4}:5000/api`;
 axios.defaults.withCredentials = true;
 
