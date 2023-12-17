@@ -16,22 +16,13 @@ interface props {
 
 const LoginScreen = () => {
   const [hidePassword, setHidePassword] = React.useState(true);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const email = useSelector(selectEmail);
+  console.log(email);
 
-  React.useEffect(() => {
-    if (email) {
-      setIsLoading(true);
-      setTimeout(() => {
-        router.push("/(drawer)/repos/repository");
-      }, 2000);
-    }
-  }, [email]);
-
-  const handleSubmit = (data: props) => {
+  const handleSubmit = (data: props, resetForm: any) => {
     console.log(data);
     console.log(data.email);
     agent.Auth.login(data.email, data.password)
@@ -39,6 +30,7 @@ const LoginScreen = () => {
         console.log(response);
         dispatch(login(response.token));
         router.push("/(drawer)/repos/repository");
+        resetForm();
       })
       .catch((error) => {
         console.log(error);
@@ -49,21 +41,15 @@ const LoginScreen = () => {
     setHidePassword(!hidePassword);
   };
 
-  if (isLoading)
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text variant="displaySmall">Iniciando sesión...</Text>
-        <ActivityIndicator animating={true} size={"large"} />
-      </SafeAreaView>
-    );
-
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayMedium">¡Hola!</Text>
       <Text variant="displaySmall">¡Que gusto verte!</Text>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => handleSubmit(values)}
+        onSubmit={(values, actions) => {
+          handleSubmit(values, actions.resetForm);
+        }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.form}>

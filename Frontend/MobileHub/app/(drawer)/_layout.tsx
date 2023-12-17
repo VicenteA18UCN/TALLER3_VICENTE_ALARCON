@@ -36,6 +36,17 @@ const DrawerLayout = () => {
             ),
           }}
         />
+        <Drawer.Screen
+          name="logout"
+          options={{
+            drawerLabel: "Cerrar Sesión",
+            title: "Cerrar Sesión",
+            drawerIcon: ({ color, size, focused }) => (
+              <Icon source="logout" color="red" size={size} />
+            ),
+            drawerLabelStyle: { color: "red" },
+          }}
+        />
       </Drawer>
     </>
   );
