@@ -5,6 +5,7 @@ import agent from "../../api/agent";
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Commit } from "../../models/Commit";
+import { useNavigation } from "expo-router";
 
 const style = StyleSheet.create({
   container: {
@@ -40,12 +41,17 @@ interface Props {
 const CommitScreen = ({ commitName }: Props) => {
   const [commit, setcommit] = React.useState<Commit[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
+  const navigation = useNavigation();
   React.useEffect(() => {
     setIsLoading(true);
     getCommits(commitName);
   }, []);
-  console.log(commitName);
+
+  React.useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
+    });
+  }, []);
 
   const getCommits = (name: string) => {
     agent.Commit.list(name)

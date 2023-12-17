@@ -7,6 +7,7 @@ import { Repository } from "../../models/Repository";
 import { ScrollView } from "react-native-gesture-handler";
 import { Link, useLocalSearchParams } from "expo-router";
 import { useRouter } from "expo-router";
+import { useNavigation } from "expo-router";
 
 const style = StyleSheet.create({
   container: {
@@ -39,10 +40,17 @@ const ReposScreen = () => {
   const [repo, setRepo] = React.useState<Repository[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     setIsLoading(true);
     getRepository();
+  }, []);
+
+  React.useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
+    });
   }, []);
 
   const getRepository = () => {

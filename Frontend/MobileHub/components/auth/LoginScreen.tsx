@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import { View, StyleSheet, Image } from "react-native";
 import { Button, Text, Appbar, TextInput } from "react-native-paper";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import agent from "../../api/agent";
@@ -14,6 +15,7 @@ interface props {
 const LoginScreen = () => {
   const [hidePassword, setHidePassword] = React.useState(true);
   const router = useRouter();
+
   const handleSubmit = (data: props) => {
     console.log(data);
     console.log(data.email);
