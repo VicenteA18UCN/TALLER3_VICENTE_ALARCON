@@ -47,12 +47,6 @@ const CommitScreen = ({ commitName }: Props) => {
     getCommits(commitName);
   }, []);
 
-  React.useEffect(() => {
-    navigation.addListener("beforeRemove", (e) => {
-      e.preventDefault();
-    });
-  }, []);
-
   const getCommits = (name: string) => {
     agent.Commit.list(name)
       .then((response) => {

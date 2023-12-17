@@ -1,6 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
+import { UserUpdate } from '../models/UserUpdate';
 
-axios.defaults.baseURL = 'http://192.168.0.13:5000/api';
+axios.defaults.baseURL = 'http://192.168.0.2:5000/api';
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -24,6 +25,11 @@ const Commit = {
     list: (repositoryName: string) => requests.get(`/repositories/commits/${repositoryName}`)
 };
 
-const agent = { Auth, Repository, Commit };
+const User = {
+    info:(email:string) => requests.get(`/users/${email}`),
+    update:(rut:string, userUpdate: UserUpdate ) => requests.put(`/users/${rut}`, userUpdate)
+};
+
+const agent = { Auth, Repository, Commit, User };
 
 export default agent;

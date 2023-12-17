@@ -1,5 +1,8 @@
 import LoginScreen from "../../components/auth/LoginScreen";
 import { Stack } from "expo-router";
+import { useSelector } from "react-redux";
+import { selectEmail } from "../../store/userSlice";
+import { useRouter } from "expo-router";
 
 const Login = () => {
   return (

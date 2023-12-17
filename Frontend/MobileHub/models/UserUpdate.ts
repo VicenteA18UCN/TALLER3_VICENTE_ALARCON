@@ -1,8 +1,6 @@
-export interface User
+export interface UserUpdate
 {
-    id: number,
     fullname: string,
-    rut: string,
     email: string,
     birthday: number,
 }

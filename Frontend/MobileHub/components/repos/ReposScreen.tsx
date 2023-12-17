@@ -8,6 +8,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Link, useLocalSearchParams } from "expo-router";
 import { useRouter } from "expo-router";
 import { useNavigation } from "expo-router";
+import { useSelector } from "react-redux";
+import { selectEmail } from "../../store/userSlice";
 
 const style = StyleSheet.create({
   container: {
@@ -41,16 +43,12 @@ const ReposScreen = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const navigation = useNavigation();
+  const email = useSelector(selectEmail);
+  console.log(email);
 
   React.useEffect(() => {
     setIsLoading(true);
     getRepository();
-  }, []);
-
-  React.useEffect(() => {
-    navigation.addListener("beforeRemove", (e) => {
-      e.preventDefault();
-    });
   }, []);
 
   const getRepository = () => {

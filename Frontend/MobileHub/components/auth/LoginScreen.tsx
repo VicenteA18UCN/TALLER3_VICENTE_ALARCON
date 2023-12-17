@@ -1,11 +1,13 @@
 import { Formik } from "formik";
 import { View, StyleSheet, Image } from "react-native";
-import { Button, Text, Appbar, TextInput } from "react-native-paper";
-
+import { Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import agent from "../../api/agent";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/userSlice";
+import { selectEmail } from "../../store/userSlice";
 
 interface props {
   email: string;
@@ -15,6 +17,15 @@ interface props {
 const LoginScreen = () => {
   const [hidePassword, setHidePassword] = React.useState(true);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const email = useSelector(selectEmail);
+
+  React.useEffect(() => {
+    if (email) {
+      router.push("/(drawer)/repos/repository");
+    }
+  }, [email]);
 
   const handleSubmit = (data: props) => {
     console.log(data);
@@ -22,6 +33,7 @@ const LoginScreen = () => {
     agent.Auth.login(data.email, data.password)
       .then((response) => {
         console.log(response);
+        dispatch(login(response.token));
         router.push("/(drawer)/repos/repository");
       })
       .catch((error) => {
