@@ -8,8 +8,8 @@ const DrawerLayout = () => {
         <Drawer.Screen
           name="repos"
           options={{
-            drawerLabel: "Mis repositorios",
-            title: "Mis repositorios",
+            drawerLabel: "Repositorios",
+            title: "Repositorios",
           }}
         />
         <Drawer.Screen

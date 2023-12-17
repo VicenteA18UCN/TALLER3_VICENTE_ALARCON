@@ -20,6 +20,10 @@ const Repository = {
     list: () => requests.get('/repositories'),
 };
 
-const agent = { Auth, Repository };
+const Commit = {
+    list: (repositoryName: string) => requests.get(`/repositories/commits/${repositoryName}`)
+};
+
+const agent = { Auth, Repository, Commit };
 
 export default agent;

@@ -9,7 +9,7 @@ const Repos = () => {
       <Drawer.Screen
         options={{
           headerShown: true,
-          title: "Mis repositorios",
+          title: "Repositorios",
           headerLeft: () => <DrawerToggleButton />,
         }}
       />

@@ -3,10 +3,8 @@ import { Button, Text, Card, ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
 import React from "react";
-import { Repository } from "../../models/Repository";
 import { ScrollView } from "react-native-gesture-handler";
-import { Link, useLocalSearchParams } from "expo-router";
-import { useRouter } from "expo-router";
+import { Commit } from "../../models/Commit";
 
 const style = StyleSheet.create({
   container: {
@@ -35,21 +33,25 @@ const style = StyleSheet.create({
   },
 });
 
-const ReposScreen = () => {
-  const [repo, setRepo] = React.useState<Repository[]>([]);
+interface Props {
+  commitName: string;
+}
+
+const CommitScreen = ({ commitName }: Props) => {
+  const [commit, setcommit] = React.useState<Commit[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const router = useRouter();
 
   React.useEffect(() => {
     setIsLoading(true);
-    getRepository();
+    getCommits(commitName);
   }, []);
+  console.log(commitName);
 
-  const getRepository = () => {
-    agent.Repository.list()
+  const getCommits = (name: string) => {
+    agent.Commit.list(name)
       .then((response) => {
-        setRepo(response);
-        console.log(repo);
+        setcommit(response);
+        console.log(commit);
       })
       .catch((error) => {
         console.log(error);
@@ -57,13 +59,6 @@ const ReposScreen = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const handlePress = (name: string) => {
-    router.push({
-      pathname: `/(drawer)/repos/commits/commit`,
-      params: { name: name },
-    });
   };
 
   if (isLoading)
@@ -76,25 +71,22 @@ const ReposScreen = () => {
   return (
     <SafeAreaView style={style.container}>
       <ScrollView style={style.scrollView}>
-        {repo.map((repo, index) => (
+        {commit.map((commit, index) => (
           <Card style={style.card} key={index}>
-            <Card.Title title={repo.name} titleVariant={"headlineMedium"} />
+            <Card.Title
+              title={commit.message}
+              titleVariant={"headlineSmall"}
+              titleNumberOfLines={3}
+            />
             <Card.Content>
               <Text variant="bodyMedium">
-                Creado el: {repo.createdAt.split("T")[0]}
+                Fecha: {commit.date.split("T")[0]}
               </Text>
               <Text variant="bodyMedium">
-                Actualizado el: {repo.updatedAt.split("T")[0]}
+                Hora: {commit.date.split("T")[1]}
               </Text>
-              <Text variant="bodyMedium">
-                Cantidad de Commits: {repo.commitCount}
-              </Text>
+              <Text variant="bodyMedium">Usuario: {commit.user}</Text>
             </Card.Content>
-            <Card.Actions>
-              <Button mode="contained" onPress={() => handlePress(repo.name)}>
-                Ver commits
-              </Button>
-            </Card.Actions>
           </Card>
         ))}
       </ScrollView>
@@ -102,4 +94,4 @@ const ReposScreen = () => {
   );
 };
 
-export default ReposScreen;
+export default CommitScreen;

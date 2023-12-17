@@ -23,7 +23,6 @@ namespace MobileHub.Src.Extensions
             CreateMap<Octokit.GitHubCommit, CommitDto>()
                 .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Commit.Message))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Commit.Author.Name))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Commit.Author.Email))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Commit.Author.Date))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Author.Login))
                 .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.Author.AvatarUrl));
