@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "0c75a8af-e969-4037-88aa-e3a6422c9eef",
+		"name": "Taller_3 Vicente Alarcón",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29661553"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"vicente.alarcon@alumnos.ucn.cl\",\r\n    \"password\":\"21177605\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ2aWNlbnRlLmFsYXJjb25AYWx1bW5vcy51Y24uY2wiLCJuYmYiOjE3MDI4MTg0NDMsImV4cCI6MTcwMzQyMzI0MywiaWF0IjoxNzAyODE4NDQzfQ.72XCNWR65j7C9Wr1gpfzKrrYx9drqM9C8o5h75L_DQ4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentPassword\":\"21177605\",\r\n    \"newPassword\":\"211776056\",\r\n    \"confirmNewPassword\":\"211776056\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/update-password/vicente.alarcon@alumnos.ucn.cl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"update-password",
+						"vicente.alarcon@alumnos.ucn.cl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Repositories",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Commit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ2aWNlbnRlLmFsYXJjb25AYWx1bW5vcy51Y24uY2wiLCJuYmYiOjE3MDI4MTg0NDMsImV4cCI6MTcwMzQyMzI0MywiaWF0IjoxNzAyODE4NDQzfQ.72XCNWR65j7C9Wr1gpfzKrrYx9drqM9C8o5h75L_DQ4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/repositories/commits/hackaton",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"repositories",
+						"commits",
+						"hackaton"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ2aWNlbnRlLmFsYXJjb25AYWx1bW5vcy51Y24uY2wiLCJuYmYiOjE3MDI4MTg0NDMsImV4cCI6MTcwMzQyMzI0MywiaWF0IjoxNzAyODE4NDQzfQ.72XCNWR65j7C9Wr1gpfzKrrYx9drqM9C8o5h75L_DQ4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullname\": \"Vicente Alarcón\",\r\n  \"email\": \"vicente.alarcon@alumnos.ucn.cl\",\r\n  \"birthday\": 1994\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/users/21.177.605-6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"21.177.605-6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
