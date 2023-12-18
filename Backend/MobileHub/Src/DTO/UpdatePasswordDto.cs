@@ -24,7 +24,6 @@ namespace MobileHub.Src.DTO
         /// Obtiene o establece la confirmación de la nueva contraseña del usuario.
         /// </summary>
         [Required(ErrorMessage = "Confirm new Password is required")]
-        [StringLength(15, MinimumLength = 6, ErrorMessage = "Password must have a length between 6 and 15 characters.")]
         [Compare("NewPassword", ErrorMessage = "Passwords do not match.")]
         public string ConfirmNewPassword { get; set; } = string.Empty;
     }

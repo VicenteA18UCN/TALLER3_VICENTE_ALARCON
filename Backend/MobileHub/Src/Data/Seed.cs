@@ -32,14 +32,14 @@ namespace MobileHub.Src.Data
                 new(){
                     Fullname= "David Nahum Araya Cádiz",
                     Email = "david.araya@alumnos.ucn.cl",
-                    Password = BCrypt.Net.BCrypt.HashPassword("20767691"),
+                    Password = BCrypt.Net.BCrypt.HashPassword("207676918"),
                     Rut =  "20.767.691-8",
                     Birthday = 2001,
                 },
                 new(){
                     Fullname= "Vicente Ignacio Alarcón Campillay",
                     Email = "vicente.alarcon@alumnos.ucn.cl",
-                    Password = BCrypt.Net.BCrypt.HashPassword("21177605"),
+                    Password = BCrypt.Net.BCrypt.HashPassword("211776056"),
                     Rut =  "21.177.605-6",
                     Birthday = 2002,
                 },

@@ -81,8 +81,7 @@ namespace MobileHub.Src.Services
         /// <returns>DTO del usuario creado.</returns>
         public async Task<CreateUserDto?> Register(CreateUserDto createUserDto)
         {
-            var rut = createUserDto.Rut.Replace(".", "").Replace("-", "");
-            var password = rut.Substring(0, rut.Length - 1);
+            var password = createUserDto.Rut.Replace(".", "").Replace("-", "");
             createUserDto.Password = BCrypt.Net.BCrypt.HashPassword(password);
 
             var user = _mappingService.CreateClientDtoToUser(createUserDto);
