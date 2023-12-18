@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0c75a8af-e969-4037-88aa-e3a6422c9eef",
+		"_postman_id": "2a67c857-4cdb-41d9-8b8e-79e3b3036008",
 		"name": "Taller_3 Vicente Alarcón",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29661553"
@@ -41,6 +41,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullname\":\"Matías Francisco Fontecilla Busch\",\r\n    \"rut\":\"21.729.131-3\",\r\n    \"email\":\"matias.fontecilla@alumnos.ucn.cl\",\r\n    \"birthday\":2002\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:5000/api/auth/register",
 					"protocol": "http",
@@ -101,8 +110,30 @@
 		{
 			"name": "Get Repositories",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ2aWNlbnRlLmFsYXJjb25AYWx1bW5vcy51Y24uY2wiLCJuYmYiOjE3MDI4MTg0NDMsImV4cCI6MTcwMzQyMzI0MywiaWF0IjoxNzAyODE4NDQzfQ.72XCNWR65j7C9Wr1gpfzKrrYx9drqM9C8o5h75L_DQ4",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/repositories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"repositories"
+					]
+				}
 			},
 			"response": []
 		},
@@ -141,8 +172,31 @@
 		{
 			"name": "Get User",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ2aWNlbnRlLmFsYXJjb25AYWx1bW5vcy51Y24uY2wiLCJuYmYiOjE3MDI4MTg0NDMsImV4cCI6MTcwMzQyMzI0MywiaWF0IjoxNzAyODE4NDQzfQ.72XCNWR65j7C9Wr1gpfzKrrYx9drqM9C8o5h75L_DQ4",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/users/vicente.alarcon@alumnos.ucn.cl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"vicente.alarcon@alumnos.ucn.cl"
+					]
+				}
 			},
 			"response": []
 		},

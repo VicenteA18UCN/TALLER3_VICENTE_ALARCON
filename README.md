@@ -10,7 +10,7 @@ Para la correcta ejecución del proyecto, se debe tener instalado los siguientes
 - [Dotnet SDK v8.0.1](https://dotnet.microsoft.com/es-es/download/dotnet/thank-you/sdk-8.0.100-windows-x64-installer)
 - [Git v2.43.0](https://git-scm.com/downloads)
 - [Android Studio](https://developer.android.com/studio) o [Expo Go](https://expo.dev/client) en tu dispositivo móvil
-- Algún editor de texto (Visual Studio Code, Sublime Text, Atom, etc.)
+- [Visual Studio Code](https://code.visualstudio.com/)
 - Puerto 5000 disponible
 - Puerto 8081 disponible
 
@@ -34,9 +34,10 @@ Luego, ingresar a la carpeta del proyecto:
 cd TALLER3_VICENTE_ALARCON
 cd Backend
 cd MobileHub
+code .
 ```
 
-Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renombrarlo a _.env_, de la siguiente forma:
+Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renombrarlo a \_.env o tambien se puede utilizar el siguiente comando en la consola en Visual Studio Code:
 
 ```bash
 cp .env.example .env
@@ -63,9 +64,10 @@ Luego abrir otra consola de comando en la carpeta donde esta alojada el proyecto
 cd TALLER3_VICENTE_ALARCON
 cd Frontend
 cd MobileHub
+code .
 ```
 
-Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renombrarlo a _.env_, de la siguiente forma:
+Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renombrarlo a \_.env o tambien se puede utilizar el siguiente comando en la consola en Visual Studio Code:
 
 ```bash
 cp .env.example .env

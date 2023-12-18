@@ -10,22 +10,22 @@ namespace MobileHub.Src.DTO
         /// <summary>
         /// Obtiene o establece la contraseña actual del usuario.
         /// </summary>
-        [Required(ErrorMessage = "La contraseña actual es obligatoria.")]
+        [Required(ErrorMessage = "Current password is required")]
         public string CurrentPassword { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtiene o establece la nueva contraseña del usuario.
         /// </summary>
-        [Required(ErrorMessage = "La nueva contraseña es obligatoria.")]
-        [StringLength(15, MinimumLength = 6, ErrorMessage = "La contraseña debe tener una longitud entre 6 y 15 caracteres.")]
+        [Required(ErrorMessage = "New password is required")]
+
         public string NewPassword { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtiene o establece la confirmación de la nueva contraseña del usuario.
         /// </summary>
-        [Required(ErrorMessage = "La confirmación de la nueva contraseña es obligatoria.")]
-        [StringLength(15, MinimumLength = 6, ErrorMessage = "La contraseña debe tener una longitud entre 6 y 15 caracteres.")]
-        [Compare("NewPassword", ErrorMessage = "Las contraseñas no coinciden.")]
+        [Required(ErrorMessage = "Confirm new Password is required")]
+        [StringLength(15, MinimumLength = 6, ErrorMessage = "Password must have a length between 6 and 15 characters.")]
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match.")]
         public string ConfirmNewPassword { get; set; } = string.Empty;
     }
 }
