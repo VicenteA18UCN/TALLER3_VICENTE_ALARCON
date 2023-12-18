@@ -1,3 +1,6 @@
+/**
+ * Modelo para actualizar el usuario
+ */
 export interface UserUpdate
 {
     fullname: string | undefined,

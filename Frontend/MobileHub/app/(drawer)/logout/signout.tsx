@@ -8,11 +8,21 @@ import { ActivityIndicator, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 
+/**
+ * Componente funcional que representa la página de cierre de sesión.
+ * @function
+ * @returns {JSX.Element} - Elemento JSX que representa la página de cierre de sesión.
+ */
 const SignOff = () => {
   const dispatch = useDispatch();
   const route = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
+  /**
+   * Efecto secundario que realiza la acción de cierre de sesión, elimina el token almacenado y redirige a la pantalla principal.
+   * @function
+   * @sideeffect
+   */
   useEffect(() => {
     dispatch(logout());
     AsyncStorage.removeItem("token");
@@ -22,9 +32,11 @@ const SignOff = () => {
     }, 3000);
   }, []);
 
+  /**
+   * Renderiza un indicador de carga mientras se realiza el cierre de sesión.
+   */
   if (isLoading)
     return (
-  
       <SafeAreaView style={styles.container}>
         <Text variant="displaySmall">Cerrando sesión...</Text>
         <ActivityIndicator animating={true} size={"large"} />
@@ -34,6 +46,10 @@ const SignOff = () => {
 
 export default SignOff;
 
+/**
+ * Estilos para el componente SignOff.
+ * @constant {object}
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

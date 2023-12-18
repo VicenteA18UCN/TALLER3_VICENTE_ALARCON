@@ -1,8 +1,12 @@
 import { Drawer } from "expo-router/drawer";
 import ReposScreen from "../../../components/repos/ReposScreen";
-import { Stack } from "expo-router";
 import { DrawerToggleButton } from "@react-navigation/drawer";
-import { View } from "react-native";
+
+/**
+ * Componente funcional que representa la página de repositorios.
+ * @function
+ * @returns {JSX.Element} - Elemento JSX que representa la página de repositorios.
+ */
 const Repos = () => {
   return (
     <>

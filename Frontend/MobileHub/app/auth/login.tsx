@@ -8,10 +8,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { StyleSheet } from "react-native";
 
+/**
+ * Componente funcional que representa la página de inicio de sesión.
+ * @function
+ * @returns {JSX.Element} - Elemento JSX que representa la página de inicio de sesión.
+ */
 const Login = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const email = useSelector(selectEmail);
+
+  /**
+   * Efecto secundario que redirige a la página de repositorios si el usuario ya está autenticado.
+   * @function
+   * @sideeffect
+   */
   React.useEffect(() => {
     if (email) {
       setIsLoading(true);
@@ -21,6 +32,9 @@ const Login = () => {
     }
   }, []);
 
+  /**
+   * Renderiza la pantalla de carga si se está iniciando sesión.
+   */
   if (isLoading)
     return (
       <SafeAreaView style={styles.container}>
@@ -39,6 +53,10 @@ const Login = () => {
 
 export default Login;
 
+/**
+ * Estilos para el componente Login.
+ * @constant {object}
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

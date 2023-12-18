@@ -1,17 +1,12 @@
 import { Drawer } from "expo-router/drawer";
-import { useDispatch } from "react-redux";
-import { Icon, MD3LightTheme as Theme } from "react-native-paper";
+import { Icon } from "react-native-paper";
 import React from "react";
 
-const theme = {
-  ...Theme,
-  colors: {
-    ...Theme.colors,
-    primary: "#FCAF43",
-    accent: "#FCAF43",
-  },
-};
-
+/**
+ * Componente funcional que representa el diseño del menú deslizante (Drawer) con opciones de navegación.
+ * @function
+ * @returns {JSX.Element} - Elemento JSX que representa el menú deslizante.
+ */
 const DrawerLayout = () => {
   return (
     <>

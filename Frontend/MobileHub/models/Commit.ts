@@ -1,3 +1,6 @@
+/**
+ * Modelo del commit
+ */
 export interface Commit {
     message:string;
     name: string;

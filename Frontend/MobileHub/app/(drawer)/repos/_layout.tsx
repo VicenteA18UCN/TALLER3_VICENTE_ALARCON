@@ -1,9 +1,11 @@
 import * as React from "react";
-import { Slot, Stack } from "expo-router";
-import { Appbar } from "react-native-paper";
-import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Stack } from "expo-router";
 
+/**
+ * Componente funcional que representa el diseño de la pantalla de repositorios.
+ * @function
+ * @returns {JSX.Element} - Elemento JSX que representa el diseño de la pantalla de repositorios.
+ */
 const ReposLayout = () => {
   return (
     <>

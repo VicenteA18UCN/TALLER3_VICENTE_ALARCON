@@ -1,9 +1,11 @@
 import * as React from "react";
-import { Slot, Stack } from "expo-router";
-import { Appbar } from "react-native-paper";
+import { Stack } from "expo-router";
 
-import { View } from "react-native";
-
+/**
+ * Componente funcional que representa el diseño de la pantalla de edición.
+ * @function
+ * @returns {JSX.Element} - Elemento JSX que representa el diseño de la pantalla de edición.
+ */
 const EditLayout = () => {
   return (
     <>
