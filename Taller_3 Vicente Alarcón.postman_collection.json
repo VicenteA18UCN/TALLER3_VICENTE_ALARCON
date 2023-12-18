@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"vicente.alarcon@alumnos.ucn.cl\",\r\n    \"password\":\"21177605\"\r\n}",
+					"raw": "{\r\n    \"email\":\"vicente.alarcon@alumnos.ucn.cl\",\r\n    \"password\":\"211776056\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,7 +83,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"currentPassword\":\"21177605\",\r\n    \"newPassword\":\"211776056\",\r\n    \"confirmNewPassword\":\"211776056\"\r\n}",
+					"raw": "{\r\n    \"currentPassword\":\"211776056\",\r\n    \"newPassword\":\"21177605\",\r\n    \"confirmNewPassword\":\"21177605\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

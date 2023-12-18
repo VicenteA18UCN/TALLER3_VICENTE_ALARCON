@@ -78,7 +78,6 @@ const RegisterScreen = () => {
                   "The fullname must be at least 10 characters"
                 )
               ) {
-                console.log(error.data.errors.Fullname);
                 errorMessage = "El nombre debe tener al menos 10 caracteres.";
               } else if (
                 error.data.errors.Fullname.includes(
