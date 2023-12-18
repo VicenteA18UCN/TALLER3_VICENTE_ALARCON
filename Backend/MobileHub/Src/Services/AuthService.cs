@@ -7,15 +7,23 @@ using System.Text;
 using MobileHub.Src.DTO;
 using MobileHub.Src.Util;
 using DotNetEnv;
-using MobileHub.Src.Models;
-using MobileHub.Src.DTO.Users;
 namespace MobileHub.Src.Services
 {
+    /// <summary>
+    /// Clase que implementa la interfaz IAuthService y proporciona servicios relacionados con la autenticación.
+    /// </summary>
     public class AuthService : IAuthService
     {
         private readonly string _jwtSecret;
         private readonly IUsersRepository _usersRepository;
         private readonly IMappingService _mappingService;
+
+        /// <summary>
+        /// Constructor de la clase AuthService.
+        /// </summary>
+        /// <param name="config">Instancia de IConfiguration para la configuración.</param>
+        /// <param name="usersRepository">Instancia de IUsersRepository para acceder a los usuarios.</param>
+        /// <param name="mappingService">Instancia de IMappingService para realizar mapeos.</param>
         public AuthService(IConfiguration config, IUsersRepository usersRepository, IMappingService mappingService)
         {
             Env.Load();
@@ -25,6 +33,11 @@ namespace MobileHub.Src.Services
             _mappingService = mappingService ?? throw new ArgumentNullException(nameof(mappingService));
         }
 
+        /// <summary>
+        /// Genera un token JWT para el usuario con el correo electrónico proporcionado.
+        /// </summary>
+        /// <param name="email">Correo electrónico del usuario.</param>
+        /// <returns>Token JWT generado.</returns>
         public string? GenerateToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -34,17 +47,20 @@ namespace MobileHub.Src.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.NameIdentifier, email),
-
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
+        /// <summary>
+        /// Verifica las credenciales del usuario.
+        /// </summary>
+        /// <param name="loginUserDto">DTO que contiene las credenciales del usuario.</param>
+        /// <returns>True si las credenciales son válidas; de lo contrario, false.</returns>
         public async Task<bool> CheckCredentials(LoginUserDto loginUserDto)
         {
             if (string.IsNullOrEmpty(loginUserDto.Email) || string.IsNullOrEmpty(loginUserDto.Password))
@@ -58,6 +74,11 @@ namespace MobileHub.Src.Services
             return BCryptHelper.CheckPassword(loginUserDto.Password, user.Password);
         }
 
+        /// <summary>
+        /// Registra un nuevo usuario con la información proporcionada.
+        /// </summary>
+        /// <param name="createUserDto">DTO que contiene la información del nuevo usuario.</param>
+        /// <returns>DTO del usuario creado.</returns>
         public async Task<CreateUserDto?> Register(CreateUserDto createUserDto)
         {
             var rut = createUserDto.Rut.Replace(".", "").Replace("-", "");
@@ -70,6 +91,12 @@ namespace MobileHub.Src.Services
             return mappedDto;
         }
 
+        /// <summary>
+        /// Actualiza la contraseña del usuario con la información proporcionada.
+        /// </summary>
+        /// <param name="updatePasswordDto">DTO que contiene la nueva contraseña.</param>
+        /// <param name="userDto">DTO del usuario para actualizar la contraseña.</param>
+        /// <returns>DTO del usuario actualizado.</returns>
         public async Task<GetUserDto?> UpdatePassword(UpdatePasswordDto updatePasswordDto, GetUserDto userDto)
         {
             var user = await _usersRepository.GetByEmail(userDto.Email);
@@ -81,6 +108,11 @@ namespace MobileHub.Src.Services
             return mappedDto;
         }
 
+        /// <summary>
+        /// Obtiene un usuario por su Rut.
+        /// </summary>
+        /// <param name="rut">Rut del usuario a buscar.</param>
+        /// <returns>DTO del usuario encontrado.</returns>
         public async Task<GetUserDto?> GetUserByRut(string rut)
         {
             var user = await _usersRepository.GetByRut(rut);
@@ -89,6 +121,11 @@ namespace MobileHub.Src.Services
             return mappedDto;
         }
 
+        /// <summary>
+        /// Obtiene un usuario por su correo electrónico.
+        /// </summary>
+        /// <param name="email">Correo electrónico del usuario a buscar.</param>
+        /// <returns>DTO del usuario encontrado.</returns>
         public async Task<GetUserDto?> GetUserByEmail(string email)
         {
             var user = await _usersRepository.GetByEmail(email);

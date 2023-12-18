@@ -109,7 +109,12 @@ namespace MobileHub.Src.Extensions
             });
             return services;
         }
-
+        /// <summary>
+        /// Método para agregar AutoMapper.
+        /// </summary>
+        /// <param name="services">
+        /// - services: Servicios de la aplicación.
+        /// </param>
         private static void AddAutoMapper(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Program).Assembly);

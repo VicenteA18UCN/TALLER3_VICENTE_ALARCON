@@ -28,18 +28,15 @@ namespace MobileHub.Src.Controllers
         }
 
         /// <summary>
-        /// Método para autenticar un administrador. En caso de que sea válido, se genera un token con el rut del administrador.
+        /// Método para autenticar un usuario. En caso de que sea válido, se genera un token con el email del usuario.
         /// </summary>
         /// <param name="loginUserDto">
-        ///    - Username: Nombre de usuario del administrador.
-        ///    - Password: Contraseña del administrador.
+        ///    - Email: Email del usuario.
+        ///    - Password: Contraseña del usuario.
         /// </param>
         /// <returns>
-        /// Retorna un token en caso de que sea válido, con el rut del administrador.
-        /// En caso de las credenciales no correspondan, retorna un BadRequest, con el mensaje "Invalid Credentials".
-        /// En caso de que el administrador no exista, retorna un BadRequest, con el mensaje "Invalid Credentials".
-        /// En caso de que el usuario no exista, retorna un BadRequest, con el mensaje "Invalid Credentials".
-        /// En caso de que el token no se genere correctamente, retorna un BadRequest, con el mensaje "Token error". 
+        /// Retorna un token en caso de que sea válido, con el email del usuario.
+        /// En caso de que no sea válido, retorna un BadRequest, con el mensaje "Invalid Credentials". 
         /// </returns>
         [AllowAnonymous]
         [HttpPost("login")]
@@ -56,6 +53,16 @@ namespace MobileHub.Src.Controllers
 
             return Ok(new { Token = token });
         }
+
+        /// <summary>
+        /// Método para registrar un nuevo usuario.
+        /// </summary>
+        /// <param name="createUserDto">
+        ///   - Email: Email del usuario.
+        ///   - Rut: Rut del usuario. 
+        ///   - Fullname: Nombre completo del usuario.
+        ///   - Password: Contraseña del usuario.
+        ///   - Birthday: Año de nacimiento del usuario. 
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register(CreateUserDto createUserDto)
@@ -82,6 +89,14 @@ namespace MobileHub.Src.Controllers
             return Ok(new { Token = token });
         }
 
+        /// <summary>
+        /// Método para actualizar la contraseña de un usuario.
+        /// </summary>
+        /// <param name="updatePasswordDto">
+        ///  - CurrentPassword: Contraseña actual del usuario.
+        ///  - NewPassword: Nueva contraseña del usuario.
+        ///  - ConfirmNewPassword: Confirmación de la nueva contraseña del usuario.
+        /// </param>
         [Authorize]
         [HttpPut("update-password/{email}")]
         public async Task<ActionResult<string>> UpdatePassword(UpdatePasswordDto updatePasswordDto, string email)

@@ -14,6 +14,10 @@ namespace MobileHub.Src.Controllers
     {
         private readonly IUsersService _usersService;
 
+        /// <summary>
+        /// Constructor de la clase UsersController.
+        /// </summary>
+        /// <param name="usersService">Servicio de usuarios.</param>
         public UsersController(IUsersService usersService)
         {
             _usersService = usersService;

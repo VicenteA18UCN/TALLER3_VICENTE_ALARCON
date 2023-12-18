@@ -10,7 +10,9 @@ Para la correcta ejecución del proyecto, se debe tener instalado los siguientes
 - [Dotnet SDK v8.0.1](https://dotnet.microsoft.com/es-es/download/dotnet/thank-you/sdk-8.0.100-windows-x64-installer)
 - [Git v2.43.0](https://git-scm.com/downloads)
 - [Android Studio](https://developer.android.com/studio) o [Expo Go](https://expo.dev/client) en tu dispositivo móvil
+- Algún editor de texto (Visual Studio Code, Sublime Text, Atom, etc.)
 - Puerto 5000 disponible
+- Puerto 8081 disponible
 
 # Instalación del proyecto
 

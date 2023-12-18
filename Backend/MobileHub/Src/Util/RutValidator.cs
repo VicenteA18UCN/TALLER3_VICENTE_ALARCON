@@ -3,10 +3,18 @@ using MobileHub.Src.Common;
 
 namespace MobileHub.Src.Util
 {
-
-
+    /// <summary>
+    /// Clase que proporciona métodos para validar y verificar RUT (Rol Único Tributario) chileno.
+    /// </summary>
     public class RutValidator
     {
+        /// <summary>
+        /// Método para validar un valor como un RUT.
+        /// </summary>
+        /// <param name="value">Valor a validar como RUT.</param>
+        /// <returns>
+        /// Devuelve true si el valor es un RUT válido; de lo contrario, false.
+        /// </returns>
         public static bool IsValid(object? value)
         {
             var rut = value?.ToString() ?? string.Empty;
@@ -14,6 +22,13 @@ namespace MobileHub.Src.Util
             return CheckRut(rut);
         }
 
+        /// <summary>
+        /// Método para verificar la validez de un RUT chileno.
+        /// </summary>
+        /// <param name="rut">RUT a verificar.</param>
+        /// <returns>
+        /// Devuelve true si el RUT es válido; de lo contrario, false.
+        /// </returns>
         public static bool CheckRut(string rut)
         {
             rut = rut.Replace(".", "").ToUpper();
@@ -27,6 +42,13 @@ namespace MobileHub.Src.Util
             return true;
         }
 
+        /// <summary>
+        /// Método para calcular el dígito verificador de un número de RUT.
+        /// </summary>
+        /// <param name="rut">Número de RUT sin dígito verificador.</param>
+        /// <returns>
+        /// Devuelve el dígito verificador calculado.
+        /// </returns>
         public static string CalculateDigit(int rut)
         {
             int sum = 0;

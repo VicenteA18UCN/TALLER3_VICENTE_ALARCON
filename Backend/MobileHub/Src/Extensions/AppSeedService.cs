@@ -19,7 +19,6 @@ namespace backend.Src.Extensions
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
             try
             {
-                // Migrate the database, create if it doesn't exist
                 context.Database.Migrate();
                 Seed.SeedData(context);
             }

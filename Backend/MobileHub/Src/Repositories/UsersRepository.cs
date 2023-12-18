@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MobileHub.Src.Repositories
 {
-    // Repositorio para los usuarios.
+    /// <summary>
+    /// Repositorio para la gestión de usuarios.
+    /// </summary>
     public class UsersRepository : IUsersRepository
     {
         /// <summary>
@@ -13,113 +15,92 @@ namespace MobileHub.Src.Repositories
         /// </summary>
         private readonly DataContext _context;
 
-        //Constructor:
+        /// <summary>
+        /// Constructor de la clase UsersRepository.
+        /// </summary>
+        /// <param name="context">Contexto de la base de datos.</param>
         public UsersRepository(DataContext context)
         {
             _context = context;
         }
 
         /// <summary>
-        /// Método para agregar un usuario.
+        /// Agrega un usuario a la base de datos.
         /// </summary>
-        /// <param name="user">
-        /// - user: Usuario a agregar.
-        /// </param>
-        /// <returns>
-        /// Retorna el usuario agregado.
-        /// </returns>
+        /// <param name="user">Usuario a agregar.</param>
+        /// <returns>El usuario agregado.</returns>
         public async Task<User> Add(User user)
         {
             var createdUser = (await _context.Users.AddAsync(user)).Entity;
             await _context.SaveChangesAsync();
             return createdUser;
         }
+
         /// <summary>
-        /// Método para actualizar un usuario.
+        /// Actualiza la información de un usuario en la base de datos.
         /// </summary>
-        /// <param name="user">
-        /// - user: Usuario a actualizar.
-        /// </param>
-        /// <returns>
-        /// Retorna el usuario actualizado.
-        /// </returns>
+        /// <param name="user">Usuario a actualizar.</param>
+        /// <returns>El usuario actualizado.</returns>
         public async Task<User> Update(User user)
         {
             var updateUser = _context.Users.Update(user).Entity;
             await _context.SaveChangesAsync();
             return updateUser;
-
         }
+
         /// <summary>
-        /// Método para eliminar un usuario.
+        /// Elimina un usuario de la base de datos.
         /// </summary>
-        /// <param name="user">
-        /// - user: Usuario a eliminar.
-        /// </param>
-        /// <returns>
-        /// Retorna el usuario eliminado.
-        /// </returns>
+        /// <param name="user">Usuario a eliminar.</param>
+        /// <returns>El usuario eliminado.</returns>
         public async Task<User> Delete(User user)
         {
             var deletedUser = _context.Users.Remove(user).Entity;
             await _context.SaveChangesAsync();
             return deletedUser;
         }
+
         /// <summary>
-        /// Método para obtener todos los usuarios. Excluye a los administradores.
+        /// Obtiene todos los usuarios de la base de datos, excluyendo a los administradores.
         /// </summary>
-        /// <returns>
-        /// Retorna una lista con todos los usuarios.
-        /// </returns>
+        /// <returns>Una lista con todos los usuarios.</returns>
         public async Task<List<User>> GetAll()
         {
-            var users = await _context.Users
-                .ToListAsync();
-
+            var users = await _context.Users.ToListAsync();
             return users;
         }
+
         /// <summary>
-        /// Método para obtener un usuario por su id.
+        /// Obtiene un usuario por su ID.
         /// </summary>
-        /// <param name="id">
-        /// - id: Id del usuario a obtener.
-        /// </param>
-        /// <returns>
-        /// Retorna el usuario obtenido.
-        /// </returns>
+        /// <param name="id">ID del usuario a obtener.</param>
+        /// <returns>El usuario obtenido.</returns>
         public async Task<User?> GetById(int id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
+
         /// <summary>
-        /// Método para obtener un usuario por su email.
+        /// Obtiene un usuario por su dirección de correo electrónico.
         /// </summary>
-        /// <param name="email">
-        /// - email: Email del usuario a obtener.
-        /// </param>
-        /// <returns>
-        /// Retorna el usuario obtenido.
-        /// </returns> 
+        /// <param name="email">Correo electrónico del usuario a obtener.</param>
+        /// <returns>El usuario obtenido.</returns>
         public async Task<User?> GetByEmail(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
+
         /// <summary>
-        /// Método para obtener un usuario por su rut.
+        /// Obtiene un usuario por su RUT.
         /// </summary>
-        /// <param name="rut">
-        /// - rut: Rut del usuario a obtener.
-        /// </param>
-        /// <returns>
-        /// Retorna el usuario obtenido.
-        /// </returns>
+        /// <param name="rut">RUT del usuario a obtener.</param>
+        /// <returns>El usuario obtenido.</returns>
         public async Task<User?> GetByRut(string rut)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Rut == rut);
             return user;
         }
-
     }
 }

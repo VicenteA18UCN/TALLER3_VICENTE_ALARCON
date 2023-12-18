@@ -8,12 +8,21 @@ using MobileHub.Src.DTO.Commits;
 
 namespace MobileHub.Src.Services
 {
+    /// <summary>
+    /// Clase que implementa la interfaz IReposService y proporciona servicios relacionados con la gestión de repositorios.
+    /// </summary>
     public class ReposService : IReposService
     {
         private readonly string _githubToken;
         private readonly IReposRepository _reposRepository;
         private readonly IMappingService _mappingService;
         private readonly GitHubClient _client;
+
+        /// <summary>
+        /// Constructor de la clase ReposService.
+        /// </summary>
+        /// <param name="reposRepository">Instancia de la interfaz IReposRepository para acceder a operaciones de repositorio de GitHub.</param>
+        /// <param name="mappingService">Instancia de la interfaz IMappingService para realizar mapeos entre objetos DTO y entidades de repositorio.</param>
         public ReposService(IReposRepository reposRepository, IMappingService mappingService)
         {
             Env.Load();
@@ -23,6 +32,10 @@ namespace MobileHub.Src.Services
             _client = ClientProvider();
         }
 
+        /// <summary>
+        /// Método para proporcionar una instancia de GitHubClient con la autenticación de token.
+        /// </summary>
+        /// <returns>Instancia de GitHubClient con la autenticación de token.</returns>
         private GitHubClient ClientProvider()
         {
             var client = new GitHubClient(new ProductHeaderValue("MobileHub"));
@@ -31,6 +44,10 @@ namespace MobileHub.Src.Services
             return client;
         }
 
+        /// <summary>
+        /// Método para obtener la lista de todos los repositorios del usuario autenticado en GitHub.
+        /// </summary>
+        /// <returns>Lista de objetos DTO que representan la información de los repositorios.</returns>
         public async Task<IReadOnlyList<ReposDto>?> GetAllRepositories()
         {
             var repos = await _reposRepository.GetAllRepositories(_client);
@@ -59,6 +76,11 @@ namespace MobileHub.Src.Services
             return reposDto;
         }
 
+        /// <summary>
+        /// Método para obtener la lista de commits de un repositorio específico.
+        /// </summary>
+        /// <param name="repoName">Nombre del repositorio.</param>
+        /// <returns>Lista de objetos DTO que representan la información de los commits.</returns>
         public async Task<IReadOnlyList<CommitDto>?> GetCommitsByRepositories(string repoName)
         {
             var commits = await _reposRepository.GetCommitsByRepositories(_client, repoName);
@@ -72,6 +94,5 @@ namespace MobileHub.Src.Services
             }
             return commitsDto;
         }
-
     }
 }
