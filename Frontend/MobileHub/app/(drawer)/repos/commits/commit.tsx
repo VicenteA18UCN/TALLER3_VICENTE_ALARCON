@@ -15,7 +15,7 @@ const Commit = () => {
           headerBackButtonMenuEnabled: true,
         }}
       />
-      <CommitScreen commitName={name} />
+      <CommitScreen repoName={name} />
     </>
   );
 };

@@ -10,38 +10,20 @@ import Toast from "react-native-root-toast";
 import { Formik } from "formik";
 import { ChangePwd } from "../../models/ChangePwd";
 
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    paddingTop: 0,
-    alignItems: "center",
-    gap: 20,
-    backgroundColor: "#f0f0f0",
-  },
-  card: {
-    width: "100%",
-    backgroundColor: "#fff",
-    marginTop: 15,
-  },
-  button: {
-    width: "100%",
-    marginTop: 20,
-  },
-  scrollView: {
-    width: "100%",
-    margin: 0,
-    padding: 0,
-    gap: 20,
-    flex: 1,
-  },
-});
-
+/**
+ * Componente para la pantalla de cambio de contraseña
+ * @component
+ */
 const UpdateScreen = () => {
   const router = useRouter();
   const email = useSelector(selectEmail);
   const [checked, setChecked] = React.useState<boolean>(false);
 
+  /**
+   * Función que se ejecuta al enviar el formulario
+   * @param data Datos del formulario
+   * @returns {void}
+   */
   const handleSubmit = (data: ChangePwd) => {
     if (
       data.currentPassword === "" ||
@@ -76,7 +58,6 @@ const UpdateScreen = () => {
     }
     agent.Auth.password(email, data)
       .then((response) => {
-        console.log(response);
         Toast.show("¡Contraseña cambiada!", {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -104,7 +85,6 @@ const UpdateScreen = () => {
           default:
             break;
         }
-
         Toast.show(errorDefault, {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -120,9 +100,9 @@ const UpdateScreen = () => {
   };
 
   return (
-    <SafeAreaView style={style.container}>
+    <SafeAreaView style={styles.container}>
       <Text variant="headlineSmall">¿Deseas cambiar contraseña?</Text>
-      <ScrollView style={style.scrollView}>
+      <ScrollView style={styles.scrollView}>
         <Formik
           initialValues={{
             currentPassword: "",
@@ -183,6 +163,9 @@ const UpdateScreen = () => {
 
 export default UpdateScreen;
 
+/**
+ * Estilos de la pantalla de inicio
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -207,5 +190,8 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     backgroundColor: "#ffffff",
+  },
+  scrollView: {
+    width: "100%",
   },
 });

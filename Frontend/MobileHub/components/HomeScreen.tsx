@@ -3,6 +3,10 @@ import { View, StyleSheet, Image } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+/**
+ * Componente que renderiza la pantalla de inicio
+ * @component
+ */
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -37,6 +41,9 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
+/**
+ * Estilos de la pantalla de inicio
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

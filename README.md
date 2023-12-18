@@ -40,7 +40,7 @@ Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renom
 cp .env.example .env
 ```
 
-Luego, modificar los siguientes parametros:
+Luego, modificar los siguientes parametros en su editor de texto favorito:
 
 ```bash
 GITHUB_TOKEN= # Token de GitHub
@@ -69,7 +69,7 @@ Dentro de la carpeta MobileHub, se debe copiar el archivo _.env.example_ y renom
 cp .env.example .env
 ```
 
-Luego, modificar los siguientes parametros:
+Luego, modificar los siguientes parametros en su editor de texto favorito:
 
 ```bash
 EXPO_PUBLIC_IP_V4= # IPv4 de tu computador

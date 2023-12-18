@@ -1,73 +1,47 @@
-import { View, StyleSheet, Image } from "react-native";
+import { StyleSheet } from "react-native";
 import { Button, Text, Card, ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
 import React from "react";
 import { Repository } from "../../models/Repository";
 import { ScrollView } from "react-native-gesture-handler";
-import { Link, useLocalSearchParams } from "expo-router";
 import { useRouter } from "expo-router";
-import { useNavigation } from "expo-router";
-import { useSelector } from "react-redux";
-import { selectEmail, selectToken } from "../../store/userSlice";
 
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    paddingTop: 0,
-    alignItems: "center",
-    gap: 20,
-    backgroundColor: "#f0f0f0",
-  },
-  card: {
-    width: "100%",
-    backgroundColor: "#fff",
-    marginTop: 15,
-  },
-  button: {
-    width: "100%",
-    marginTop: 20,
-  },
-  scrollView: {
-    width: "100%",
-    margin: 0,
-    padding: 0,
-    gap: 20,
-    flex: 1,
-  },
-});
-
+/**
+ * Componente que renderiza la pantalla de Repositorios
+ * @component
+ */
 const ReposScreen = () => {
   const [repo, setRepo] = React.useState<Repository[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
-  const navigation = useNavigation();
-  const email = useSelector(selectEmail);
-  console.log(email);
-  const token = useSelector(selectToken);
-  console.log(token);
 
+  /**
+   * Hook de efecto que se ejecuta al renderizar la pantalla
+   */
   React.useEffect(() => {
     setIsLoading(true);
     getRepository();
   }, []);
 
+  /**
+   * Función que obtiene los repositorios del usuario
+   */
   const getRepository = () => {
     agent.Repository.list()
       .then((response) => {
-        console.log(response);
         setRepo(response);
-        console.log(repo);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });
   };
 
+  /**
+   * Función que redirecciona a la pantalla de Commits
+   * @param name Nombre del repositorio
+   */
   const handlePress = (name: string) => {
     router.push({
       pathname: `/(drawer)/repos/commits/commit`,
@@ -75,6 +49,9 @@ const ReposScreen = () => {
     });
   };
 
+  /**
+   * Si isLoading es true, se muestra un ActivityIndicator
+   */
   if (isLoading)
     return (
       <SafeAreaView style={style.container}>
@@ -112,3 +89,33 @@ const ReposScreen = () => {
 };
 
 export default ReposScreen;
+
+/**
+ * Estilos de la pantalla de Repositorios
+ */
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    paddingTop: 0,
+    alignItems: "center",
+    gap: 20,
+    backgroundColor: "#f0f0f0",
+  },
+  card: {
+    width: "100%",
+    backgroundColor: "#fff",
+    marginTop: 15,
+  },
+  button: {
+    width: "100%",
+    marginTop: 20,
+  },
+  scrollView: {
+    width: "100%",
+    margin: 0,
+    padding: 0,
+    gap: 20,
+    flex: 1,
+  },
+});

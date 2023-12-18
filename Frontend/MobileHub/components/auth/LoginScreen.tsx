@@ -1,28 +1,39 @@
 import { Formik } from "formik";
 import { View, StyleSheet, Image } from "react-native";
-import { ActivityIndicator, Button, Text, TextInput } from "react-native-paper";
+import { Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import agent from "../../api/agent";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/userSlice";
-import { selectEmail } from "../../store/userSlice";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-root-toast";
 
+/**
+ * Interfaz para los datos del formulario
+ */
 interface props {
   email: string;
   password: string;
 }
 
+/**
+ * Componente para la pantalla de inicio de sesión
+ * @component
+ */
 const LoginScreen = () => {
   const [hidePassword, setHidePassword] = React.useState(true);
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const email = useSelector(selectEmail);
-
+  /**
+   * Función que se ejecuta al enviar el formulario
+   * @param data Datos del formulario
+   * @param resetForm Función para resetear el formulario
+   * @returns {void}
+   */
   const handleSubmit = (data: props, resetForm: any) => {
     if (data.email === "" || data.password === "") {
       Toast.show("¡Complete todos los campos!", {
@@ -38,11 +49,8 @@ const LoginScreen = () => {
       });
       return;
     }
-    console.log(data);
-
     agent.Auth.login(data.email, data.password)
       .then((response) => {
-        console.log(response);
         AsyncStorage.setItem("token", response.token);
         dispatch(login(response.token));
         router.push("/(drawer)/repos/repository");
@@ -50,7 +58,7 @@ const LoginScreen = () => {
       })
       .catch((error) => {
         let errorDefault: string = "Ha ocurrido un error. Intente nuevamente.";
-        console.log(error.data);
+
         switch (error.status) {
           case 400:
             if (error.data.errors?.Email) {
@@ -82,6 +90,9 @@ const LoginScreen = () => {
       });
   };
 
+  /**
+   * Función que muestra u oculta la contraseña
+   */
   const handleHidePassword = () => {
     setHidePassword(!hidePassword);
   };
@@ -140,6 +151,9 @@ const LoginScreen = () => {
 
 export default LoginScreen;
 
+/**
+ * Estilos de la pantalla de inicio de sesión
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

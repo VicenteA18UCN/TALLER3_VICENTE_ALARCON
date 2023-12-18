@@ -11,70 +11,55 @@ import { Formik } from "formik";
 import { UserUpdate } from "../../models/UserUpdate";
 import Toast from "react-native-root-toast";
 
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    paddingTop: 0,
-    alignItems: "center",
-    gap: 20,
-    backgroundColor: "#f0f0f0",
-  },
-  card: {
-    width: "100%",
-    backgroundColor: "#fff",
-    marginTop: 15,
-  },
-  button: {
-    width: "100%",
-    marginTop: 20,
-  },
-  scrollView: {
-    width: "100%",
-    margin: 0,
-    padding: 0,
-    gap: 20,
-    flex: 1,
-  },
-});
-
+/**
+ * Componente para la pantalla de edición de perfil
+ * @component
+ */
 const EditScreen = () => {
   const [user, setUser] = React.useState<User>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isDisabled, setIsDisabled] = React.useState<boolean>(true);
-  const router = useRouter();
   const email = useSelector(selectEmail);
 
+  /**
+   * Hook de efecto que se ejecuta al renderizar la pantalla
+   */
   React.useEffect(() => {
     setIsLoading(true);
     getUser();
   }, []);
 
+  /**
+   * Función que obtiene los datos del usuario
+   */
   const getUser = () => {
     agent.User.info(email)
       .then((response) => {
         setUser(response);
-        console.log(user);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });
   };
 
+  /**
+   * Función que habilita los campos para editar
+   */
   const handleEdit = () => {
     setIsDisabled(!isDisabled);
   };
 
+  /**
+   * Función que se ejecuta al enviar el formulario
+   * @param data Datos del formulario
+   * @returns {void}
+   */
   const handleSubmit = (data: UserUpdate) => {
-    console.log(data);
     const rut = user?.rut;
     if (!rut) return;
     agent.User.update(rut, data)
       .then((response) => {
-        console.log(response);
         getUser();
         Toast.show("¡Perfil actualizado!", {
           duration: Toast.durations.LONG,
@@ -90,8 +75,6 @@ const EditScreen = () => {
         setIsDisabled(true);
       })
       .catch((error) => {
-        console.log(error.data);
-        console.log(error.data.status);
         let errorMessage: string = "Ha ocurrido un error. Intente nuevamente.";
         switch (error.data.status) {
           case 400:
@@ -144,15 +127,18 @@ const EditScreen = () => {
       });
   };
 
+  /**
+   * Si isLoading es true, se muestra un ActivityIndicator
+   */
   if (isLoading)
     return (
-      <SafeAreaView style={style.container}>
+      <SafeAreaView style={styles.container}>
         <ActivityIndicator animating={true} size={"large"} />
       </SafeAreaView>
     );
 
   return (
-    <SafeAreaView style={style.container}>
+    <SafeAreaView style={styles.container}>
       <Text variant="headlineLarge">Información Personal</Text>
       <ScrollView style={styles.input}>
         <Formik
@@ -230,6 +216,9 @@ const EditScreen = () => {
 
 export default EditScreen;
 
+/**
+ * Estilos de la pantalla de edición de perfil
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

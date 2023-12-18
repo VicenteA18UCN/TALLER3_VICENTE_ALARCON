@@ -1,12 +1,5 @@
 import { Formik } from "formik";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Touchable,
-  Keyboard,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
@@ -14,6 +7,9 @@ import { useRouter } from "expo-router";
 import Toast from "react-native-root-toast";
 import { format, clean } from "rut.js";
 
+/**
+ * Interfaz para los datos del formulario
+ */
 interface props {
   fullname: string;
   email: string;
@@ -21,13 +17,22 @@ interface props {
   birthday: string;
 }
 
+/**
+ * Componente para la pantalla de registro
+ * @component
+ */
 const RegisterScreen = () => {
   const router = useRouter();
+
+  /**
+   * Función que se ejecuta al enviar el formulario
+   * @param data Datos del formulario
+   * @param resetForm Función para resetear el formulario
+   * @returns {void}
+   */
   const handleSubmit = (data: props, resetForm: any) => {
-    console.log(data);
     const birthday = parseInt(data.birthday);
     const rut = clean(data.rut);
-    console.log(format(rut));
     if (
       data.fullname === "" ||
       data.email === "" ||
@@ -49,7 +54,6 @@ const RegisterScreen = () => {
     }
     agent.Auth.register(data.fullname, data.email, birthday, format(rut))
       .then((response) => {
-        console.log(response);
         router.push("/");
         Toast.show("¡Registro exitoso!", {
           duration: Toast.durations.LONG,
@@ -65,8 +69,6 @@ const RegisterScreen = () => {
         resetForm();
       })
       .catch((error) => {
-        console.log(error.data);
-        console.log(error.data.status);
         let errorMessage: string = "Ha ocurrido un error. Intente nuevamente.";
         switch (error.data.status) {
           case 400:
@@ -197,6 +199,9 @@ const RegisterScreen = () => {
 
 export default RegisterScreen;
 
+/**
+ * Estilos de la pantalla de registro
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
