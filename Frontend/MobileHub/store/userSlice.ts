@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {jwtDecode} from "jwt-decode";
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { jwtDecode } from "jwt-decode";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import "core-js/stable/atob";
 
 /**
@@ -11,12 +11,11 @@ import "core-js/stable/atob";
  * @property {number} exp - Tiempo de expiración del token.
  * @property {number} iat - Tiempo en que se emitió el token.
  */
-interface JwtPayload 
-{
-    nameid:string,
-    nbf:number,
-    exp:number,
-    iat:number,
+interface JwtPayload {
+  nameid: string;
+  nbf: number;
+  exp: number;
+  iat: number;
 }
 
 /**
@@ -25,10 +24,9 @@ interface JwtPayload
  * @property {string | null} email - Correo electrónico del usuario.
  * @property {string | null} token - Token de autenticación del usuario.
  */
-export interface UserState 
-{
-    email: string | null,
-    token: string | null,
+export interface UserState {
+  email: string | null;
+  token: string | null;
 }
 
 /**
@@ -36,8 +34,8 @@ export interface UserState
  * @type {UserState}
  */
 const initialState: UserState = {
-    email: null,
-    token: null,
+  email: null,
+  token: null,
 };
 
 /**
@@ -45,32 +43,33 @@ const initialState: UserState = {
  * @type {object}
  */
 export const userSlice = createSlice({
-    name: 'account',
-    initialState,
-    reducers: {
-        /**
-         * Acción para realizar el inicio de sesión del usuario.
-         * @function
-         * @param {UserState} state - Estado actual de la porción de estado del usuario.
-         * @param {PayloadAction<string>} action - Acción con la carga útil del token de autenticación.
-         */
-        login(state,action:PayloadAction<string>)
-        {
-            const payload = jwtDecode<JwtPayload>(action.payload);
-            state.email = payload.nameid;
-            state.token = action.payload;
-        },
-        /**
-         * Acción para realizar el cierre de sesión del usuario.
-         * @function
-         * @param {UserState} state - Estado actual de la porción de estado del usuario.
-         */
-        logout(state)
-        {
-            state.email = null;
-            state.token = null;
-        },
+  name: "account",
+  initialState,
+  reducers: {
+    /**
+     * Acción para realizar el inicio de sesión del usuario.
+     * @function
+     * @param {UserState} state - Estado actual de la porción de estado del usuario.
+     * @param {PayloadAction<string>} action - Acción con la carga útil del token de autenticación.
+     */
+    login(state, action: PayloadAction<string>) {
+      const payload = jwtDecode<JwtPayload>(action.payload);
+      state.email = payload.nameid;
+      state.token = action.payload;
     },
+    /**
+     * Acción para realizar el cierre de sesión del usuario.
+     * @function
+     * @param {UserState} state - Estado actual de la porción de estado del usuario.
+     */
+    logout(state) {
+      state.email = null;
+      state.token = null;
+    },
+    setEmail(state, action: PayloadAction<string>) {
+      state.email = action.payload;
+    },
+  },
 });
 
 /**
@@ -87,10 +86,10 @@ export const selectEmail = (state: any) => state.user.email;
  * @param {any} state - Estado de Redux.
  * @returns {string | null} - Token de autenticación del usuario.
  */
-export const selectToken = (state:any) => state.user.token;
+export const selectToken = (state: any) => state.user.token;
 
 /**
  * Acciones de la porción de estado del usuario.
  * @type {object}
  */
-export const { login, logout } = userSlice.actions;
+export const { login, logout, setEmail } = userSlice.actions;

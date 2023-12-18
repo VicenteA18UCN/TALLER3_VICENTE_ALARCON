@@ -144,6 +144,7 @@ const UpdateScreen = () => {
                   onPress={() => {
                     setChecked(!checked);
                   }}
+                  
                 ></Checkbox>
               </View>
               <Button

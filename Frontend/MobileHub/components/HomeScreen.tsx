@@ -18,20 +18,12 @@ const HomeScreen = () => {
         style={styles.logo}
       />
       <Link href="/auth/login" asChild>
-        <Button
-          mode="contained"
-          onPress={() => console.log("Pressed")}
-          style={styles.button}
-        >
+        <Button mode="contained" style={styles.button}>
           Iniciar Sesión
         </Button>
       </Link>
       <Link href="/register/create" asChild>
-        <Button
-          mode="outlined"
-          onPress={() => console.log("Pressed")}
-          style={styles.button}
-        >
+        <Button mode="outlined" style={styles.button}>
           Regístrarme
         </Button>
       </Link>

@@ -32,7 +32,7 @@ const RegisterScreen = () => {
    */
   const handleSubmit = (data: props, resetForm: any) => {
     const birthday = parseInt(data.birthday);
-    const rut = clean(data.rut);
+
     if (
       data.fullname === "" ||
       data.email === "" ||
@@ -52,7 +52,7 @@ const RegisterScreen = () => {
       });
       return;
     }
-    agent.Auth.register(data.fullname, data.email, birthday, format(rut))
+    agent.Auth.register(data.fullname, data.email, birthday, data.rut)
       .then((response) => {
         router.push("/");
         Toast.show("¡Registro exitoso!", {
@@ -166,7 +166,7 @@ const RegisterScreen = () => {
               <TextInput
                 label="Rut"
                 placeholder="Ej: 12.345.678-9"
-                value={values.rut !== "" ? format(values.rut) : ""}
+                value={values.rut}
                 onChangeText={handleChange("rut")}
                 onBlur={handleBlur("rut")}
                 left={<TextInput.Icon icon="account-details" />}

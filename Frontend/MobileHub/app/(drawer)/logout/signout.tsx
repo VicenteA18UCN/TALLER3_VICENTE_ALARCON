@@ -29,6 +29,7 @@ const SignOff = () => {
     setTimeout(() => {
       setIsLoading(false);
       route.replace("/");
+      dispatch(logout());
     }, 3000);
   }, []);
 

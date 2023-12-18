@@ -4,12 +4,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import agent from "../../api/agent";
 import React from "react";
 import { useRouter } from "expo-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectEmail } from "../../store/userSlice";
 import { User } from "../../models/User";
 import { Formik } from "formik";
 import { UserUpdate } from "../../models/UserUpdate";
 import Toast from "react-native-root-toast";
+import { setEmail } from "../../store/userSlice";
 
 /**
  * Componente para la pantalla de edición de perfil
@@ -17,9 +18,11 @@ import Toast from "react-native-root-toast";
  */
 const EditScreen = () => {
   const [user, setUser] = React.useState<User>();
+  const [key, setKey] = React.useState<number>(0);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isDisabled, setIsDisabled] = React.useState<boolean>(true);
   const email = useSelector(selectEmail);
+  const dispatch = useDispatch();
 
   /**
    * Hook de efecto que se ejecuta al renderizar la pantalla
@@ -47,6 +50,7 @@ const EditScreen = () => {
    * Función que habilita los campos para editar
    */
   const handleEdit = () => {
+    setKey(key + 1);
     setIsDisabled(!isDisabled);
   };
 
@@ -57,10 +61,12 @@ const EditScreen = () => {
    */
   const handleSubmit = (data: UserUpdate) => {
     const rut = user?.rut;
+    const emailString: string = data.email ? data.email : "";
     if (!rut) return;
     agent.User.update(rut, data)
       .then((response) => {
         getUser();
+        dispatch(setEmail(emailString));
         Toast.show("¡Perfil actualizado!", {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -75,6 +81,7 @@ const EditScreen = () => {
         setIsDisabled(true);
       })
       .catch((error) => {
+        console.log(error.data);
         let errorMessage: string = "Ha ocurrido un error. Intente nuevamente.";
         switch (error.data.status) {
           case 400:
@@ -95,7 +102,9 @@ const EditScreen = () => {
               }
             } else if (error.data.errors?.Birthday) {
               if (
-                error.data.errors.Birthday.includes("The birthday is not valid")
+                error.data.errors.Birthday.includes(
+                  "The age birthday is not valid"
+                )
               ) {
                 errorMessage = "El año de nacimiento no es válido.";
               }
@@ -138,7 +147,7 @@ const EditScreen = () => {
     );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} key={key}>
       <Text variant="headlineLarge">Información Personal</Text>
       <ScrollView style={styles.input}>
         <Formik
